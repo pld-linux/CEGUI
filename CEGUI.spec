@@ -2,7 +2,8 @@
 # - plenty of BRs are missing
 # - gcc33 patch only for AC-branch
 #
-Summary:	CEGUI is a free library providing windowing and widgets
+Summary:	CEGUI - a free library providing windowing and widgets
+Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
 Name:		CEGUI
 Version:	0.5.0
 Release:	1
@@ -28,13 +29,25 @@ library is object orientated, written in C++, and targeted at games
 developers who should be spending their time creating great games, not
 building GUI sub-systems!
 
+%description -l pl.UTF-8
+CEGUI oznacza Crazy Eddie's Gui System - wolnodostępną bibliotekę
+zapewniającą okienka i widgety dla graficznych API i silników tam,
+gdzie natywnie taka funkcjonalność nie jest dostępna lub ma znaczące
+braki. Biblioteka jest zorientowana obiektowo, napisana w C++ i
+skierowana dla programistów gier, którzy powinni spędzać czas na
+pisaniu świetnych gier, a nie tworzeniu podsystemów GUI!
+
 %package devel
 Summary:	Development files for CEGUI
+Summary(pl.UTF-8):	Pliki programistyczne dla CEGUI
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
 CEGUI headers and documentation.
+
+%description devel -l pl.UTF-8
+Pliki nagłówkowe i dokumentacja do CEGUI.
 
 %prep
 %setup -q -b 1
@@ -72,5 +85,5 @@ rm -rf $RPM_BUILD_ROOT
 %doc documentation
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
-%{_includedir}/%{name}/*
+%{_includedir}/%{name}
 %{_pkgconfigdir}/*
