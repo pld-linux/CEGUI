@@ -1,5 +1,4 @@
 # TODO:
-# - plenty of BRs are missing
 # - gcc33 patch only for AC-branch
 #
 Summary:	CEGUI - a free library providing windowing and widgets
@@ -15,10 +14,15 @@ Source1:	http://dl.sourceforge.net/crayzedsgui/%{name}-DOCS-%{version}.tar.gz
 # Source1-md5:	e268b5812f146ee1ff9ba4c07ff501b7
 Patch0:         %{name}-gcc33.patch
 URL:		http://www.cegui.org.uk/
+BuildRequires:	FreeImage-devel
+BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	freetype-devel >= 0.15.0
+BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	pcre-devel
+BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
