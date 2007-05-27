@@ -1,9 +1,7 @@
 # TODO:
 # - gcc33 patch only for AC-branch
 # - ogre-renderer (BR: CEGUI-OGRE >= 1.0.0 through pkgconfig)
-# - irrlicht-renderer (BR: irrlicht-devel, xorg-lib-libXxf86vm-devel)
 # - corona (BR: corona >= 1.2.0 through corona-config script)
-# - devil (BR: DevIL-devel)
 # - silly (BR: SILLY >= 0.1.0 through pkgconfig)
 #
 Summary:	CEGUI - a free library providing windowing and widgets
@@ -20,6 +18,7 @@ Source1:	http://dl.sourceforge.net/crayzedsgui/%{name}-DOCS-%{version}.tar.gz
 Patch0:         %{name}-gcc33.patch
 Patch1:		%{name}-link.patch
 URL:		http://www.cegui.org.uk/
+BuildRequires:	DevIL-devel
 BuildRequires:	FreeImage-devel
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-glut-devel
@@ -27,6 +26,7 @@ BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 BuildRequires:	expat-devel
 BuildRequires:	freetype-devel >= 2.0
+BuildRequires:	irrlicht-renderer
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	libxml2-devel >= 1:2.6
@@ -34,6 +34,8 @@ BuildRequires:	lua50-devel >= 5.0
 BuildRequires:	pcre-devel >= 5.0
 BuildRequires:	pkgconfig
 BuildRequires:	xerces-c-devel
+# for irrlicht
+BuildRequires:	xorg-lib-libXxf86vm-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
