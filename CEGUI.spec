@@ -1,8 +1,6 @@
 # TODO:
 # - gcc33 patch only for AC-branch
 # - ogre-renderer (BR: CEGUI-OGRE >= 1.0.0 through pkgconfig)
-# - corona (BR: corona >= 1.2.0 through corona-config script)
-# - silly (BR: SILLY >= 0.1.0 through pkgconfig)
 #
 Summary:	CEGUI - a free library providing windowing and widgets
 Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
@@ -22,8 +20,10 @@ BuildRequires:	DevIL-devel
 BuildRequires:	FreeImage-devel
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-glut-devel
+BuildRequires:	SILLY-devel >= 0.1.0
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
+BuildRequires:	corona-devel >= 1.0.2
 BuildRequires:	expat-devel
 BuildRequires:	freetype-devel >= 2.0
 BuildRequires:	irrlicht-devel
