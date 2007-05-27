@@ -26,7 +26,7 @@ BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 BuildRequires:	expat-devel
 BuildRequires:	freetype-devel >= 2.0
-BuildRequires:	irrlicht-renderer
+BuildRequires:	irrlicht-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	libxml2-devel >= 1:2.6
