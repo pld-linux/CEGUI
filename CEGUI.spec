@@ -1,5 +1,10 @@
 # TODO:
 # - gcc33 patch only for AC-branch
+# - ogre-renderer (BR: CEGUI-OGRE >= 1.0.0 through pkgconfig)
+# - irrlicht-renderer (BR: irrlicht-devel, xorg-lib-libXxf86vm-devel)
+# - corona (BR: corona >= 1.2.0 through corona-config script)
+# - devil (BR: DevIL-devel)
+# - silly (BR: SILLY >= 0.1.0 through pkgconfig)
 #
 Summary:	CEGUI - a free library providing windowing and widgets
 Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
@@ -13,16 +18,22 @@ Source0:	http://dl.sourceforge.net/crayzedsgui/%{name}-%{version}b.tar.gz
 Source1:	http://dl.sourceforge.net/crayzedsgui/%{name}-DOCS-%{version}.tar.gz
 # Source1-md5:	e268b5812f146ee1ff9ba4c07ff501b7
 Patch0:         %{name}-gcc33.patch
+Patch1:		%{name}-link.patch
 URL:		http://www.cegui.org.uk/
 BuildRequires:	FreeImage-devel
 BuildRequires:	OpenGL-GLU-devel
-BuildRequires:	autoconf
+BuildRequires:	OpenGL-glut-devel
+BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
-BuildRequires:	freetype-devel >= 0.15.0
+BuildRequires:	expat-devel
+BuildRequires:	freetype-devel >= 2.0
 BuildRequires:	libstdc++-devel
-BuildRequires:	libtool
-BuildRequires:	pcre-devel
+BuildRequires:	libtool >= 2:1.5
+BuildRequires:	libxml2-devel >= 1:2.6
+BuildRequires:	lua50-devel >= 5.0
+BuildRequires:	pcre-devel >= 5.0
 BuildRequires:	pkgconfig
+BuildRequires:	xerces-c-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -46,6 +57,9 @@ Summary:	Development files for CEGUI
 Summary(pl.UTF-8):	Pliki programistyczne dla CEGUI
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	freetype-devel >= 2.0
+Requires:	libstdc++-devel
+Requires:	pcre-devel >= 5.0
 
 %description devel
 CEGUI headers and documentation.
@@ -56,6 +70,7 @@ Pliki nagłówkowe i dokumentacja do CEGUI.
 %prep
 %setup -q -b 1
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}
@@ -63,7 +78,9 @@ Pliki nagłówkowe i dokumentacja do CEGUI.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-%configure
+%configure \
+	--with-default-image-codec=FreeImageImageCodec \
+	--with-default-parser=LibxmlParser
 
 %{__make}
 
@@ -82,12 +99,13 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README
-%attr(755,root,root) %{_libdir}/lib*.so.*.*.*
+%attr(755,root,root) %{_libdir}/libCEGUI*.so.*.*.*
 
 %files devel
 %defattr(644,root,root,755)
 %doc documentation
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
+%attr(755,root,root) %{_libdir}/libCEGUI*.so
+%{_libdir}/libCEGUI*.la
 %{_includedir}/%{name}
-%{_pkgconfigdir}/*
+%{_pkgconfigdir}/CEGUI.pc
+%{_pkgconfigdir}/CEGUI-OPENGL.pc
