@@ -1,6 +1,7 @@
 # TODO:
 # - gcc33 patch only for AC-branch
 # - ogre-renderer (BR: CEGUI-OGRE >= 1.0.0 through pkgconfig)
+# - maybe we should make subpackages? For example CEGUI-OPENGL (smc.spec)?
 #
 Summary:	CEGUI - a free library providing windowing and widgets
 Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
@@ -13,7 +14,7 @@ Source0:	http://dl.sourceforge.net/crayzedsgui/%{name}-%{version}b.tar.gz
 # Source0-md5:	b42322a33c6a06eede76b15f75694a17
 Source1:	http://dl.sourceforge.net/crayzedsgui/%{name}-DOCS-%{version}.tar.gz
 # Source1-md5:	e268b5812f146ee1ff9ba4c07ff501b7
-Patch0:         %{name}-gcc33.patch
+Patch0:		%{name}-gcc33.patch
 Patch1:		%{name}-link.patch
 URL:		http://www.cegui.org.uk/
 BuildRequires:	DevIL-devel
