@@ -2,6 +2,11 @@
 # - gcc33 patch only for AC-branch
 # - ogre-renderer (BR: CEGUI-OGRE >= 1.0.0 through pkgconfig)
 # - maybe we should make subpackages? For example CEGUI-OPENGL (smc.spec)?
+# - doesn't build (too newest xerces?):
+#   CEGUIXercesParser.cpp: In static member function 
+#   'static void CEGUI::XercesParser::initialiseSchema(xercesc_2_8::SAX2XMLReader*,
+#   const CEGUI::String&, const CEGUI::String&, const CEGUI::String&)':
+#   CEGUIXercesParser.cpp:233: error: incomplete type 'xercesc_2_8::Grammar' used in nested name specifier
 #
 Summary:	CEGUI - a free library providing windowing and widgets
 Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
