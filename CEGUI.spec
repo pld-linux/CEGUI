@@ -2,11 +2,11 @@
 # - gcc33 patch only for AC-branch
 # - ogre-renderer (BR: CEGUI-OGRE >= 1.0.0 through pkgconfig)
 # - maybe we should make subpackages? For example CEGUI-OPENGL (smc.spec)?
-# - doesn't build (too newest xerces?):
-#   CEGUIXercesParser.cpp: In static member function 
-#   'static void CEGUI::XercesParser::initialiseSchema(xercesc_2_8::SAX2XMLReader*,
-#   const CEGUI::String&, const CEGUI::String&, const CEGUI::String&)':
-#   CEGUIXercesParser.cpp:233: error: incomplete type 'xercesc_2_8::Grammar' used in nested name specifier
+# - if You want have irrlight renderer enabled pass CC=athlon-pld-linux-g++ to configure
+#	because irrlight.h test is compiled by CC
+#
+# Conditional build:
+%bcond_with	xercesc
 #
 Summary:	CEGUI - a free library providing windowing and widgets
 Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
@@ -15,8 +15,8 @@ Version:	0.5.0
 Release:	1
 License:	LGPL
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/crayzedsgui/%{name}-%{version}b.tar.gz
-# Source0-md5:	b42322a33c6a06eede76b15f75694a17
+Source0:	http://dl.sourceforge.net/crayzedsgui/%{name}-%{version}.tar.gz
+# Source0-md5:	c4ad1d85a7fe1de1b907c2a49a592010
 Source1:	http://dl.sourceforge.net/crayzedsgui/%{name}-DOCS-%{version}.tar.gz
 # Source1-md5:	e268b5812f146ee1ff9ba4c07ff501b7
 Patch0:		%{name}-gcc33.patch
@@ -39,7 +39,11 @@ BuildRequires:	libxml2-devel >= 1:2.6
 BuildRequires:	lua50-devel >= 5.0
 BuildRequires:	pcre-devel >= 5.0
 BuildRequires:	pkgconfig
+%if %{with xercesc}
 BuildRequires:	xerces-c-devel
+BuildConflicts: xerces-c-devel >= 2.8.0
+Conflicts:	xerces-c >= 2.8.0
+%endif
 # for irrlicht
 BuildRequires:	xorg-lib-libXxf86vm-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -88,7 +92,12 @@ Pliki nagłówkowe i dokumentacja do CEGUI.
 %{__automake}
 %configure \
 	--with-default-image-codec=FreeImageImageCodec \
-	--with-default-parser=LibxmlParser
+	--with-default-parser=LibxmlParser \
+%if %{with xercesc}
+	--enable-xerces-c
+%else
+	--disable-xerces-c
+%endif
 
 %{__make}
 
