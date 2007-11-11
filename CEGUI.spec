@@ -15,8 +15,8 @@ Version:	0.5.0
 Release:	1
 License:	LGPL
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/crayzedsgui/%{name}-%{version}.tar.gz
-# Source0-md5:	c4ad1d85a7fe1de1b907c2a49a592010
+Source0:	http://dl.sourceforge.net/crayzedsgui/%{name}-%{version}b.tar.gz
+# Source0-md5:	b42322a33c6a06eede76b15f75694a17
 Source1:	http://dl.sourceforge.net/crayzedsgui/%{name}-DOCS-%{version}.tar.gz
 # Source1-md5:	e268b5812f146ee1ff9ba4c07ff501b7
 Patch0:		%{name}-gcc33.patch
