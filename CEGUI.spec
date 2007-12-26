@@ -2,18 +2,16 @@
 # - gcc33 patch only for AC-branch
 # - ogre-renderer (BR: CEGUI-OGRE >= 1.0.0 through pkgconfig)
 # - maybe we should make subpackages? For example CEGUI-OPENGL (smc.spec)?
-# - if You want have irrlight renderer enabled pass CC=athlon-pld-linux-g++ to configure
-#	because irrlight.h test is compiled by CC
 #
 # Conditional build:
-%bcond_with	xercesc
+%bcond_with	xercesc		# build XercesParser
 #
 Summary:	CEGUI - a free library providing windowing and widgets
 Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
 Name:		CEGUI
 Version:	0.5.0
 Release:	1
-License:	LGPL
+License:	LGPL v2.1+ (with MIT parts)
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/crayzedsgui/%{name}-%{version}b.tar.gz
 # Source0-md5:	b42322a33c6a06eede76b15f75694a17
@@ -21,6 +19,7 @@ Source1:	http://dl.sourceforge.net/crayzedsgui/%{name}-DOCS-%{version}.tar.gz
 # Source1-md5:	e268b5812f146ee1ff9ba4c07ff501b7
 Patch0:		%{name}-gcc33.patch
 Patch1:		%{name}-link.patch
+Patch2:		%{name}-irrlicht.patch
 URL:		http://www.cegui.org.uk/
 BuildRequires:	DevIL-devel
 BuildRequires:	FreeImage-devel
@@ -32,20 +31,21 @@ BuildRequires:	automake
 BuildRequires:	corona-devel >= 1.0.2
 BuildRequires:	expat-devel
 BuildRequires:	freetype-devel >= 2.0
-BuildRequires:	irrlicht-devel
+BuildRequires:	irrlicht-devel >= 1.4
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	libxml2-devel >= 1:2.6
 BuildRequires:	lua50-devel >= 5.0
 BuildRequires:	pcre-devel >= 5.0
 BuildRequires:	pkgconfig
+# for irrlicht renderer
+BuildRequires:	xorg-lib-libXxf86vm-devel
+Requires:	irrlicht >= 1.4
 %if %{with xercesc}
 BuildRequires:	xerces-c-devel
 BuildConflicts: xerces-c-devel >= 2.8.0
 Conflicts:	xerces-c >= 2.8.0
 %endif
-# for irrlicht
-BuildRequires:	xorg-lib-libXxf86vm-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -83,6 +83,7 @@ Pliki nagłówkowe i dokumentacja do CEGUI.
 %setup -q -b 1
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__libtoolize}
