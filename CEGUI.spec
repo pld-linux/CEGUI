@@ -4,19 +4,21 @@
 # - maybe we should make subpackages? For example CEGUI-OPENGL (smc.spec)?
 #
 # Conditional build:
-%bcond_with	xercesc		# build XercesParser
+%bcond_without	xercesc		# build XercesParser
+%bcond_with	ogre		# build samples with ogre3d
+%bcond_with	samples		# build samples
 #
 Summary:	CEGUI - a free library providing windowing and widgets
 Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
 Name:		CEGUI
-Version:	0.5.0
+Version:	0.6.0
 Release:	1
 License:	LGPL v2.1+ (with MIT parts)
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/crayzedsgui/%{name}-%{version}b.tar.gz
-# Source0-md5:	b42322a33c6a06eede76b15f75694a17
+Source0:	http://dl.sourceforge.net/crayzedsgui/%{name}-%{version}.tar.gz
+# Source0-md5:	a7772b20a4e3530298e3e28c4eaec1bb
 Source1:	http://dl.sourceforge.net/crayzedsgui/%{name}-DOCS-%{version}.tar.gz
-# Source1-md5:	e268b5812f146ee1ff9ba4c07ff501b7
+# Source1-md5:	8abece86ea0b8a52737579ac2e801978
 Patch0:		%{name}-gcc33.patch
 Patch1:		%{name}-link.patch
 Patch2:		%{name}-irrlicht.patch
@@ -38,13 +40,15 @@ BuildRequires:	libxml2-devel >= 1:2.6
 BuildRequires:	lua50-devel >= 5.0
 BuildRequires:	pcre-devel >= 5.0
 BuildRequires:	pkgconfig
+%if %{with ogre}
+BuildRequires:	ois-devel
+BuildRequires:	ogre-devel
+%endif
 # for irrlicht renderer
 BuildRequires:	xorg-lib-libXxf86vm-devel
 Requires:	irrlicht >= 1.4
 %if %{with xercesc}
 BuildRequires:	xerces-c-devel
-BuildConflicts: xerces-c-devel >= 2.8.0
-Conflicts:	xerces-c >= 2.8.0
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -82,8 +86,8 @@ Pliki nagłówkowe i dokumentacja do CEGUI.
 %prep
 %setup -q -b 1
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
+#%patch1 -p1
+#%patch2 -p1
 
 %build
 %{__libtoolize}
@@ -94,11 +98,9 @@ Pliki nagłówkowe i dokumentacja do CEGUI.
 %configure \
 	--with-default-image-codec=FreeImageImageCodec \
 	--with-default-parser=LibxmlParser \
-%if %{with xercesc}
-	--enable-xerces-c
-%else
-	--disable-xerces-c
-%endif
+	%{!?with_samples:--disable-samples} \
+	%{!?with_ogre:--without-ogre-renderer} \
+	--%{?with_xercesc:en}%{!?with_xercesc:dis}able-xerces-c
 
 %{__make}
 
