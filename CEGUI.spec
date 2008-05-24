@@ -132,7 +132,6 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README
-%attr(755,root,root) %{_libdir}/libCEGUI*.so.*.*.*
 %attr(755,root,root) %{_libdir}/libCEGUI*.so.*
 %attr(755,root,root) %{_libdir}/libCEGUIDevILImageCodec.so
 %attr(755,root,root) %{_libdir}/libCEGUIExpatParser.so
