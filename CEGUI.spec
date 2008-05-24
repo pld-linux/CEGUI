@@ -12,7 +12,7 @@ Summary:	CEGUI - a free library providing windowing and widgets
 Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
 Name:		CEGUI
 Version:	0.6.0
-Release:	1
+Release:	2
 License:	LGPL v2.1+ (with MIT parts)
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/crayzedsgui/%{name}-%{version}.tar.gz
@@ -78,10 +78,23 @@ Requires:	libstdc++-devel
 Requires:	pcre-devel >= 5.0
 
 %description devel
-CEGUI headers and documentation.
+CEGUI headers.
 
 %description devel -l pl.UTF-8
-Pliki nagłówkowe i dokumentacja do CEGUI.
+Pliki nagłówkowe CEGUI.
+
+%package docs
+Summary:	Documentation files for CEGUI
+Summary(pl.UTF-8):	Pliki dokumentacji CEGUI
+Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description docs
+CEGUI documentation.
+
+%description docs -l pl.UTF-8
+Dokumentacja CEGUI.
+
 
 %prep
 %setup -q -b 1
@@ -120,11 +133,18 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README
 %attr(755,root,root) %{_libdir}/libCEGUI*.so.*.*.*
+%attr(755,root,root) %{_libdir}/libCEGUI*.so.*
+%attr(755,root,root) %{_libdir}/libCEGUI*.so
+
+%files docs
+%doc documentation
+%dir %{_datadir}/%{name}
+%dir %{_datadir}/%{name}/XMLRefSchema
+%{_datadir}/%{name}/XMLRefSchema/*.xsd
+%{_datadir}/%{name}/XMLRefSchema/Readme.txt
 
 %files devel
 %defattr(644,root,root,755)
-%doc documentation
-%attr(755,root,root) %{_libdir}/libCEGUI*.so
 %{_libdir}/libCEGUI*.la
 %{_includedir}/%{name}
 %{_pkgconfigdir}/CEGUI.pc
