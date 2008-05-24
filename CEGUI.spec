@@ -134,7 +134,18 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog README
 %attr(755,root,root) %{_libdir}/libCEGUI*.so.*.*.*
 %attr(755,root,root) %{_libdir}/libCEGUI*.so.*
-%attr(755,root,root) %{_libdir}/libCEGUI*.so
+%attr(755,root,root) %{_libdir}/libCEGUIDevILImageCodec.so
+%attr(755,root,root) %{_libdir}/libCEGUIExpatParser.so
+%attr(755,root,root) %{_libdir}/libCEGUIFalagardWRBase.so
+%attr(755,root,root) %{_libdir}/libCEGUIFreeImageImageCodec.so
+%attr(755,root,root) %{_libdir}/libCEGUIIrrlichtRenderer.so
+%attr(755,root,root) %{_libdir}/libCEGUILibxmlParser.so
+%attr(755,root,root) %{_libdir}/libCEGUILuaScriptModule.so
+%attr(755,root,root) %{_libdir}/libCEGUISILLYImageCodec.so
+%attr(755,root,root) %{_libdir}/libCEGUITGAImageCodec.so
+%attr(755,root,root) %{_libdir}/libCEGUITinyXMLParser.so
+%attr(755,root,root) %{_libdir}/libCEGUItoluapp.so
+%attr(755,root,root) %{_libdir}/libCEGUIXercesParser.so
 
 %files docs
 %doc documentation
@@ -145,6 +156,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libCEGUIBase.so
+%attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer.so
 %{_libdir}/libCEGUI*.la
 %{_includedir}/%{name}
 %{_pkgconfigdir}/CEGUI.pc
