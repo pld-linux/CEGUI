@@ -86,7 +86,7 @@ Pliki nagłówkowe CEGUI.
 %package docs
 Summary:	Documentation files for CEGUI
 Summary(pl.UTF-8):	Pliki dokumentacji CEGUI
-Group:		Development/Libraries
+Group:		Documentation
 Requires:	%{name} = %{version}-%{release}
 
 %description docs
