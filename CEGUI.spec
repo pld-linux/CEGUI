@@ -12,14 +12,14 @@
 Summary:	CEGUI - a free library providing windowing and widgets
 Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
 Name:		CEGUI
-Version:	0.6.1
-Release:	3
+Version:	0.6.2
+Release:	1
 License:	LGPL v2.1+ (with MIT parts)
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/crayzedsgui/%{name}-%{version}.tar.gz
-# Source0-md5:	aee37f8532ecbdc0b87efbaebafdf148
+Source0:	http://dl.sourceforge.net/crayzedsgui/%{name}-%{version}b.tar.gz
+# Source0-md5:	4fbd95e5a2ac1c7acf2a8f5df3ac6b93
 Source1:	http://dl.sourceforge.net/crayzedsgui/%{name}-%{version}-DOCS.tar.gz
-# Source1-md5:	e0fe06bb43e00c5d7b278e7167740bd7
+# Source1-md5:	5c6b54b9472ffaefc27ed4a9b8fefe25
 Patch0:		%{name}-link.patch
 URL:		http://www.cegui.org.uk/
 BuildRequires:	DevIL-devel
