@@ -21,6 +21,7 @@ Source0:	http://dl.sourceforge.net/crayzedsgui/%{name}-%{version}b.tar.gz
 Source1:	http://dl.sourceforge.net/crayzedsgui/%{name}-%{version}-DOCS.tar.gz
 # Source1-md5:	5c6b54b9472ffaefc27ed4a9b8fefe25
 Patch0:		%{name}-link.patch
+Patch1:		%{name}-gcc43.patch
 URL:		http://www.cegui.org.uk/
 BuildRequires:	DevIL-devel
 BuildRequires:	FreeImage-devel
@@ -99,6 +100,7 @@ Dokumentacja CEGUI.
 %prep
 %setup -q -b 1
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}
