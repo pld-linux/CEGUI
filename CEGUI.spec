@@ -13,7 +13,7 @@ Summary:	CEGUI - a free library providing windowing and widgets
 Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
 Name:		CEGUI
 Version:	0.6.2
-Release:	1
+Release:	2
 License:	LGPL v2.1+ (with MIT parts)
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/crayzedsgui/%{name}-%{version}b.tar.gz
@@ -24,6 +24,7 @@ Patch0:		%{name}-link.patch
 Patch1:		%{name}-gcc43.patch
 URL:		http://www.cegui.org.uk/
 BuildRequires:	DevIL-devel
+BuildRequires:	DirectFB-devel
 BuildRequires:	FreeImage-devel
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-glut-devel
@@ -138,6 +139,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libCEGUIOpenGLRenderer.so.0
 # plugins
+%attr(755,root,root) %{_libdir}/libCEGUIdirectfbRenderer.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libCEGUIdirectfbRenderer.so.0
+%attr(755,root,root) %{_libdir}/libCEGUIdirectfbRenderer.so
 %attr(755,root,root) %{_libdir}/libCEGUICoronaImageCodec.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libCEGUICoronaImageCodec.so.0
 %attr(755,root,root) %{_libdir}/libCEGUICoronaImageCodec.so
@@ -193,6 +197,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libCEGUIBase.la
 %{_libdir}/libCEGUIOpenGLRenderer.la
 # plugins - but as their headers are included...
+%{_libdir}/libCEGUIdirectfbRenderer.la
 %{_libdir}/libCEGUICoronaImageCodec.la
 %{_libdir}/libCEGUIDevILImageCodec.la
 %{_libdir}/libCEGUIExpatParser.la
