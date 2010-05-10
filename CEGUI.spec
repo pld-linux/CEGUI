@@ -16,9 +16,9 @@ Version:	0.7.1
 Release:	0.1
 License:	LGPL v2.1+ (with MIT parts)
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/crayzedsgui/%{name}-%{version}.tar.gz
+Source0:	http://downloads.sourceforge.net/crayzedsgui/%{name}-%{version}.tar.gz
 # Source0-md5:	0a2815d5204e3c5510884ab62285da97
-Source1:	http://dl.sourceforge.net/crayzedsgui/%{name}-DOCS-%{version}.tar.gz
+Source1:	http://downloads.sourceforge.net/crayzedsgui/%{name}-DOCS-%{version}.tar.gz
 # Source1-md5:	b6c1656d6b004c3dc11bf4b887fd5bd3
 Patch0:		%{name}-link.patch
 URL:		http://www.cegui.org.uk/
