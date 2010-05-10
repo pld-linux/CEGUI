@@ -12,16 +12,15 @@
 Summary:	CEGUI - a free library providing windowing and widgets
 Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
 Name:		CEGUI
-Version:	0.6.2
-Release:	2
+Version:	0.7.1
+Release:	0.1
 License:	LGPL v2.1+ (with MIT parts)
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/crayzedsgui/%{name}-%{version}b.tar.gz
-# Source0-md5:	4fbd95e5a2ac1c7acf2a8f5df3ac6b93
-Source1:	http://dl.sourceforge.net/crayzedsgui/%{name}-%{version}-DOCS.tar.gz
-# Source1-md5:	5c6b54b9472ffaefc27ed4a9b8fefe25
+Source0:	http://dl.sourceforge.net/crayzedsgui/%{name}-%{version}.tar.gz
+# Source0-md5:	0a2815d5204e3c5510884ab62285da97
+Source1:	http://dl.sourceforge.net/crayzedsgui/%{name}-DOCS-%{version}.tar.gz
+# Source1-md5:	b6c1656d6b004c3dc11bf4b887fd5bd3
 Patch0:		%{name}-link.patch
-Patch1:		%{name}-gcc43.patch
 URL:		http://www.cegui.org.uk/
 BuildRequires:	DevIL-devel
 BuildRequires:	DirectFB-devel
@@ -99,9 +98,8 @@ Dokumentacja CEGUI.
 
 
 %prep
-%setup -q -b 1
+%setup -q -a 1
 %patch0 -p1
-%patch1 -p1
 
 %build
 %{__libtoolize}
@@ -132,63 +130,44 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog README
+%doc doc/README
 # libs
-%attr(755,root,root) %{_libdir}/libCEGUIBase.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUIBase.so.1
-%attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUIOpenGLRenderer.so.0
+%attr(755,root,root) %{_libdir}/libCEGUIBase-%{version}.so
+%attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer-%{version}.so
 # plugins
-%attr(755,root,root) %{_libdir}/libCEGUIdirectfbRenderer.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUIdirectfbRenderer.so.0
-%attr(755,root,root) %{_libdir}/libCEGUIdirectfbRenderer.so
-%attr(755,root,root) %{_libdir}/libCEGUICoronaImageCodec.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUICoronaImageCodec.so.0
+%attr(755,root,root) %{_libdir}/libCEGUICoronaImageCodec-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUICoronaImageCodec.so
-%attr(755,root,root) %{_libdir}/libCEGUIDevILImageCodec.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUIDevILImageCodec.so.0
+%attr(755,root,root) %{_libdir}/libCEGUIDevILImageCodec-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUIDevILImageCodec.so
-%attr(755,root,root) %{_libdir}/libCEGUIExpatParser.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUIExpatParser.so.0
+%attr(755,root,root) %{_libdir}/libCEGUIExpatParser-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUIExpatParser.so
-%attr(755,root,root) %{_libdir}/libCEGUIFalagardWRBase.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUIFalagardWRBase.so.1
+%attr(755,root,root) %{_libdir}/libCEGUIFalagardWRBase-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUIFalagardWRBase.so
-%attr(755,root,root) %{_libdir}/libCEGUIFreeImageImageCodec.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUIFreeImageImageCodec.so.0
+%attr(755,root,root) %{_libdir}/libCEGUIFreeImageImageCodec-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUIFreeImageImageCodec.so
-%attr(755,root,root) %{_libdir}/libCEGUIIrrlichtRenderer.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUIIrrlichtRenderer.so.0
+%attr(755,root,root) %{_libdir}/libCEGUIIrrlichtRenderer-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUIIrrlichtRenderer.so
-%attr(755,root,root) %{_libdir}/libCEGUILibxmlParser.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUILibxmlParser.so.0
+%attr(755,root,root) %{_libdir}/libCEGUILibxmlParser-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUILibxmlParser.so
-%attr(755,root,root) %{_libdir}/libCEGUILuaScriptModule.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUILuaScriptModule.so.1
+%attr(755,root,root) %{_libdir}/libCEGUILuaScriptModule-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUILuaScriptModule.so
-%attr(755,root,root) %{_libdir}/libCEGUISILLYImageCodec.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUISILLYImageCodec.so.0
+%attr(755,root,root) %{_libdir}/libCEGUISILLYImageCodec-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUISILLYImageCodec.so
-%attr(755,root,root) %{_libdir}/libCEGUITGAImageCodec.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUITGAImageCodec.so.0
+%attr(755,root,root) %{_libdir}/libCEGUITGAImageCodec-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUITGAImageCodec.so
-%attr(755,root,root) %{_libdir}/libCEGUITinyXMLParser.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUITinyXMLParser.so.0
+%attr(755,root,root) %{_libdir}/libCEGUITinyXMLParser-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUITinyXMLParser.so
-%attr(755,root,root) %{_libdir}/libCEGUIXercesParser.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUIXercesParser.so.0
+%attr(755,root,root) %{_libdir}/libCEGUIXercesParser-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUIXercesParser.so
-%attr(755,root,root) %{_libdir}/libCEGUItoluapp.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUItoluapp.so.1
+%attr(755,root,root) %{_libdir}/libCEGUItoluapp-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUItoluapp.so
 
 %files docs
 %defattr(644,root,root,755)
-%doc documentation
+%doc docs/CEGUI-DOCS-%{version}
 %dir %{_datadir}/%{name}
-%dir %{_datadir}/%{name}/XMLRefSchema
-%{_datadir}/%{name}/XMLRefSchema/*.xsd
-%{_datadir}/%{name}/XMLRefSchema/Readme.txt
+%dir %{_datadir}/%{name}/xml_schemas
+%{_datadir}/%{name}/xml_schemas/*.xsd
 
 %files devel
 %defattr(644,root,root,755)
@@ -197,7 +176,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libCEGUIBase.la
 %{_libdir}/libCEGUIOpenGLRenderer.la
 # plugins - but as their headers are included...
-%{_libdir}/libCEGUIdirectfbRenderer.la
 %{_libdir}/libCEGUICoronaImageCodec.la
 %{_libdir}/libCEGUIDevILImageCodec.la
 %{_libdir}/libCEGUIExpatParser.la
