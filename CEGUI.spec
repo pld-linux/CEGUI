@@ -6,7 +6,7 @@
 #
 # Conditional build:
 %bcond_without	xercesc		# build XercesParser
-%bcond_with	ogre		# build samples with ogre3d
+%bcond_without	ogre		# build samples with ogre3d
 %bcond_with	samples		# build samples
 #
 Summary:	CEGUI - a free library providing windowing and widgets
@@ -111,7 +111,7 @@ Dokumentacja CEGUI.
 	--with-default-image-codec=FreeImageImageCodec \
 	--with-default-xml-parser=LibxmlParser \
 	%{!?with_samples:--disable-samples} \
-	%{!?with_ogre:--without-ogre-renderer} \
+	--%{?with_ogre:en}%{!?with_ogre:dis}able-ogre-renderer \
 	--%{?with_xercesc:en}%{!?with_xercesc:dis}able-xerces-c
 
 %{__make}
