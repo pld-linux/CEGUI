@@ -1,8 +1,6 @@
 # TODO:
 # - external tinyxml
 # - external tolua++
-# - STOP THIS ALL CAPS I CAN WRITE MADNESS. FOR EXAMPLE OPENGL IS NOT ALL CAPS
-#   IN UPSTREAM AND SO IS NOT OGRE IN ALL CAPS
 #
 # Conditional build:
 %bcond_without	xercesc		# build XercesParser
@@ -14,7 +12,7 @@ Summary:	CEGUI - a free library providing windowing and widgets
 Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
 Name:		CEGUI
 Version:	0.7.1
-Release:	1
+Release:	2
 License:	LGPL v2.1+ (with MIT parts)
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/crayzedsgui/%{name}-%{version}.tar.gz
@@ -77,8 +75,8 @@ Summary:	Development files for CEGUI
 Summary(pl.UTF-8):	Pliki programistyczne dla CEGUI
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	%{name}-OGRE = %{version}-%{release}
-Requires:	%{name}-OPENGL = %{version}-%{release}
+Requires:	%{name}-Ogre = %{version}-%{release}
+Requires:	%{name}-OpenGL = %{version}-%{release}
 Requires:	freetype-devel >= 2.0
 Requires:	libstdc++-devel
 Requires:	pcre-devel >= 5.0
@@ -101,28 +99,28 @@ CEGUI documentation.
 %description docs -l pl.UTF-8
 Dokumentacja CEGUI.
 
-%package OPENGL
+%package OpenGL
 Summary:	OpenGLRenderer library for CEGUI
 Summary(pl.UTF-8):	Biblioteka OpenGLRenderer dla CEGUI
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
-%description OPENGL
+%description OpenGL
 OpenGLRenderer library for CEGUI.
 
-%description OPENGL -l pl.UTF-8
+%description OpenGL -l pl.UTF-8
 Biblioteka OpenGLRenderer dla CEGUI.
 
-%package OGRE
+%package Ogre
 Summary:	OgreRenderer library for CEGUI
 Summary(pl.UTF-8):	Biblioteka OgreRenderer dla CEGUI
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
-%description OGRE
+%description Ogre
 OgreRenderer library for CEGUI.
 
-%description OGRE -l pl.UTF-8
+%description Ogre -l pl.UTF-8
 Biblioteka OgreRenderer dla CEGUI
 
 %prep
@@ -224,13 +222,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/CEGUI-OGRE.pc
 
 %if %{with opengl}
-%files OPENGL
+%files OpenGL
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer-%{version}.so
 %endif
 
 %if %{with ogre}
-%files OGRE
+%files Ogre
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libCEGUIOgreRenderer-%{version}.so
 %endif
