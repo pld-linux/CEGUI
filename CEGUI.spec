@@ -75,6 +75,8 @@ Summary:	Development files for CEGUI
 Summary(pl.UTF-8):	Pliki programistyczne dla CEGUI
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	CEGUI-OGRE
+Requires:	CEGUI-OPENGL
 Requires:	freetype-devel >= 2.0
 Requires:	libstdc++-devel
 Requires:	pcre-devel >= 5.0
@@ -195,7 +197,11 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libCEGUIBase.so
+%attr(755,root,root) %{_libdir}/libCEGUIOgreRenderer.so
+%attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer.so
 %{_libdir}/libCEGUIBase.la
+%{_libdir}/libCEGUIOgreRenderer.la
+%{_libdir}/libCEGUIOpenGLRenderer.la
 # plugins - but as their headers are included...
 %{_libdir}/libCEGUICoronaImageCodec.la
 %{_libdir}/libCEGUIDevILImageCodec.la
@@ -219,14 +225,10 @@ rm -rf $RPM_BUILD_ROOT
 %files OPENGL
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer.so
-%{_libdir}/libCEGUIOpenGLRenderer.la
 %endif
 
 %if %{with ogre}
 %files OGRE
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libCEGUIOgreRenderer-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUIOgreRenderer.so
-%{_libdir}/libCEGUIOgreRenderer.la
 %endif
