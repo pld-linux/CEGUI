@@ -6,7 +6,8 @@
 #
 # Conditional build:
 %bcond_without	xercesc		# build XercesParser
-%bcond_without	ogre		# build samples with ogre3d
+%bcond_without	ogre		# build without Ogre renderer
+%bcond_without	opengl		# build without OpenGL renderer
 %bcond_with	samples		# build samples
 #
 Summary:	CEGUI - a free library providing windowing and widgets
@@ -25,8 +26,10 @@ URL:		http://www.cegui.org.uk/
 BuildRequires:	DevIL-devel
 BuildRequires:	DirectFB-devel
 BuildRequires:	FreeImage-devel
+%if %{with opengl}
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-glut-devel
+%endif
 BuildRequires:	SILLY-devel >= 0.1.0
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
@@ -96,6 +99,17 @@ CEGUI documentation.
 %description docs -l pl.UTF-8
 Dokumentacja CEGUI.
 
+%package OPENGL
+Summary:	OpenGLRenderer library for CEGUI
+Summary(pl.UTF-8):	Biblioteka OpenGLRenderer dla CEGUI
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description OPENGL
+OpenGLRenderer library for CEGUI.
+
+%description OPENGL -l pl.UTF-8
+Biblioteka OpenGLRenderer dla CEGUI.
 
 %prep
 %setup -q -a 1
@@ -112,6 +126,7 @@ Dokumentacja CEGUI.
 	--with-default-xml-parser=LibxmlParser \
 	%{!?with_samples:--disable-samples} \
 	--%{?with_ogre:en}%{!?with_ogre:dis}able-ogre-renderer \
+	--%{?with_opengl:en}%{!?with_opengl:dis}able-opengl-renderer \
 	--%{?with_xercesc:en}%{!?with_xercesc:dis}able-xerces-c
 
 %{__make}
@@ -131,9 +146,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc doc/README
-# libs
 %attr(755,root,root) %{_libdir}/libCEGUIBase-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer-%{version}.so
 # plugins
 %attr(755,root,root) %{_libdir}/libCEGUICoronaImageCodec-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUICoronaImageCodec.so
@@ -172,9 +185,7 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libCEGUIBase.so
-%attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer.so
 %{_libdir}/libCEGUIBase.la
-%{_libdir}/libCEGUIOpenGLRenderer.la
 # plugins - but as their headers are included...
 %{_libdir}/libCEGUICoronaImageCodec.la
 %{_libdir}/libCEGUIDevILImageCodec.la
@@ -192,3 +203,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/%{name}
 %{_pkgconfigdir}/CEGUI.pc
 %{_pkgconfigdir}/CEGUI-OPENGL.pc
+
+%if %{with opengl}
+%files OPENGL
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer-%{version}.so
+%attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer.so
+%{_libdir}/libCEGUIOpenGLRenderer.la
+%endif
