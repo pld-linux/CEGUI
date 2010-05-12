@@ -1,6 +1,8 @@
 # TODO:
 # - external tinyxml
 # - external tolua++
+# - STOP THIS ALL CALLS I CAN WRITE MADNESS. FOR EXAMPLE OPENGL IS NOT ALL CAPS
+#   IN UPSTREAM AND SO IS NOT OGRE IN ALL CAPS
 #
 # Conditional build:
 %bcond_without	xercesc		# build XercesParser
@@ -75,8 +77,8 @@ Summary:	Development files for CEGUI
 Summary(pl.UTF-8):	Pliki programistyczne dla CEGUI
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	CEGUI-OGRE
-Requires:	CEGUI-OPENGL
+Requires:	%{name}-OGRE = %{version}-%{release}
+Requires:	%{name}-OPENGL = %{version}-%{release}
 Requires:	freetype-devel >= 2.0
 Requires:	libstdc++-devel
 Requires:	pcre-devel >= 5.0
