@@ -1,8 +1,6 @@
 # TODO:
 # - external tinyxml
 # - external tolua++
-# - ogre-renderer (BR: CEGUI-OGRE >= 1.0.0 through pkgconfig)
-# - maybe we should make subpackages? For example CEGUI-OPENGL (smc.spec)?
 #
 # Conditional build:
 %bcond_without	xercesc		# build XercesParser
@@ -111,6 +109,18 @@ OpenGLRenderer library for CEGUI.
 %description OPENGL -l pl.UTF-8
 Biblioteka OpenGLRenderer dla CEGUI.
 
+%package OGRE
+Summary:	OgreRenderer library for CEGUI
+Summary(pl.UTF-8):	Biblioteka OgreRenderer dla CEGUI
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description OGRE
+OgreRenderer library for CEGUI.
+
+%description OGRE -l pl.UTF-8
+Biblioteka OgreRenderer dla CEGUI
+
 %prep
 %setup -q -a 1
 %patch0 -p1
@@ -203,6 +213,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/%{name}
 %{_pkgconfigdir}/CEGUI.pc
 %{_pkgconfigdir}/CEGUI-OPENGL.pc
+%{_pkgconfigdir}/CEGUI-OGRE.pc
 
 %if %{with opengl}
 %files OPENGL
@@ -210,4 +221,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer.so
 %{_libdir}/libCEGUIOpenGLRenderer.la
+%endif
+
+%if %{with ogre}
+%files OGRE
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libCEGUIOgreRenderer-%{version}.so
+%attr(755,root,root) %{_libdir}/libCEGUIOgreRenderer.so
+%{_libdir}/libCEGUIOgreRenderer.la
 %endif
