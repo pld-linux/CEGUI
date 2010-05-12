@@ -4,7 +4,7 @@
 #
 # Conditional build:
 %bcond_without	xercesc		# build XercesParser
-%bcond_without	ogre		# build without Ogre renderer
+%bcond_with	ogre		# build without Ogre renderer
 %bcond_without	opengl		# build without OpenGL renderer
 %bcond_with	samples		# build samples
 #
@@ -12,7 +12,7 @@ Summary:	CEGUI - a free library providing windowing and widgets
 Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
 Name:		CEGUI
 Version:	0.7.1
-Release:	2
+Release:	3
 License:	LGPL v2.1+ (with MIT parts)
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/crayzedsgui/%{name}-%{version}.tar.gz
