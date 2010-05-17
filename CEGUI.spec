@@ -75,8 +75,8 @@ Summary:	Development files for CEGUI
 Summary(pl.UTF-8):	Pliki programistyczne dla CEGUI
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	%{name}-Ogre = %{version}-%{release}
-Requires:	%{name}-OpenGL = %{version}-%{release}
+%{?with_ogre:Requires:	%{name}-Ogre = %{version}-%{release}}
+%{?with_opengl:Requires:	%{name}-OpenGL = %{version}-%{release}}
 Requires:	freetype-devel >= 2.0
 Requires:	libstdc++-devel
 Requires:	pcre-devel >= 5.0
