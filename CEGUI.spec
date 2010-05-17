@@ -197,11 +197,11 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libCEGUIBase.so
-%attr(755,root,root) %{_libdir}/libCEGUIOgreRenderer.so
-%attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer.so
+%{?with_ogre:%attr(755,root,root) %{_libdir}/libCEGUIOgreRenderer.so}
+%{?with_opengl:%attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer.so}
 %{_libdir}/libCEGUIBase.la
-%{_libdir}/libCEGUIOgreRenderer.la
-%{_libdir}/libCEGUIOpenGLRenderer.la
+%{?with_ogre:%{_libdir}/libCEGUIOgreRenderer.la}
+%{?with_opengl:%{_libdir}/libCEGUIOpenGLRenderer.la}
 # plugins - but as their headers are included...
 %{_libdir}/libCEGUICoronaImageCodec.la
 %{_libdir}/libCEGUIDevILImageCodec.la
@@ -218,8 +218,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libCEGUItoluapp.la
 %{_includedir}/%{name}
 %{_pkgconfigdir}/CEGUI.pc
-%{_pkgconfigdir}/CEGUI-OPENGL.pc
-%{_pkgconfigdir}/CEGUI-OGRE.pc
+%{?with_opengl:%{_pkgconfigdir}/CEGUI-OPENGL.pc}
+%{?with_ogre:%{_pkgconfigdir}/CEGUI-OGRE.pc}
 
 %if %{with opengl}
 %files OpenGL
