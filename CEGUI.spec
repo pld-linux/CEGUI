@@ -1,7 +1,6 @@
 # TODO:
 # - external tinyxml
 # - external tolua++
-# - some plugins are missing
 #
 # Conditional build:
 %bcond_without	xercesc		# build XercesParser
@@ -12,14 +11,14 @@
 Summary:	CEGUI - a free library providing windowing and widgets
 Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
 Name:		CEGUI
-Version:	0.7.2
-Release:	0.1
+Version:	0.7.3
+Release:	1
 License:	LGPL v2.1+ (with MIT parts)
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/crayzedsgui/%{name}-%{version}.tar.gz
-# Source0-md5:	f22ea030aeebc7d8c25070fdae413a18
+# Source0-md5:	8b0ff8b7a67127327c55a00f02a42d0d
 Source1:	http://downloads.sourceforge.net/crayzedsgui/%{name}-DOCS-%{version}.tar.gz
-# Source1-md5:	b7e4768040dda4105d0b9770c3bcda07
+# Source1-md5:	7872daacaddf44f883017929dbc75f2d
 URL:		http://www.cegui.org.uk/
 BuildRequires:	DevIL-devel
 BuildRequires:	DirectFB-devel
@@ -159,8 +158,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc doc/README
 %attr(755,root,root) %{_libdir}/libCEGUIBase-%{version}.so
 # plugins
-#%%attr(755,root,root) %{_libdir}/libCEGUICoronaImageCodec-%{version}.so
-#%%attr(755,root,root) %{_libdir}/libCEGUICoronaImageCodec.so
 %attr(755,root,root) %{_libdir}/libCEGUIDevILImageCodec-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUIDevILImageCodec.so
 %attr(755,root,root) %{_libdir}/libCEGUIExpatParser-%{version}.so
@@ -173,18 +170,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libCEGUIIrrlichtRenderer.so
 %attr(755,root,root) %{_libdir}/libCEGUILibxmlParser-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUILibxmlParser.so
-#%%attr(755,root,root) %{_libdir}/libCEGUILuaScriptModule-%{version}.so
-#%%attr(755,root,root) %{_libdir}/libCEGUILuaScriptModule.so
 %attr(755,root,root) %{_libdir}/libCEGUISILLYImageCodec-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUISILLYImageCodec.so
+%attr(755,root,root) %{_libdir}/libCEGUISTBImageCodec-%{version}.so
+%attr(755,root,root) %{_libdir}/libCEGUISTBImageCodec.so
 %attr(755,root,root) %{_libdir}/libCEGUITGAImageCodec-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUITGAImageCodec.so
 %attr(755,root,root) %{_libdir}/libCEGUITinyXMLParser-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUITinyXMLParser.so
 %attr(755,root,root) %{_libdir}/libCEGUIXercesParser-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUIXercesParser.so
-#%%attr(755,root,root) %{_libdir}/libCEGUItoluapp-%{version}.so
-#%%attr(755,root,root) %{_libdir}/libCEGUItoluapp.so
 
 %files docs
 %defattr(644,root,root,755)
@@ -202,19 +197,17 @@ rm -rf $RPM_BUILD_ROOT
 %{?with_ogre:%{_libdir}/libCEGUIOgreRenderer.la}
 %{?with_opengl:%{_libdir}/libCEGUIOpenGLRenderer.la}
 # plugins - but as their headers are included...
-#%%{_libdir}/libCEGUICoronaImageCodec.la
 %{_libdir}/libCEGUIDevILImageCodec.la
 %{_libdir}/libCEGUIExpatParser.la
 %{_libdir}/libCEGUIFalagardWRBase.la
 %{_libdir}/libCEGUIFreeImageImageCodec.la
 %{_libdir}/libCEGUIIrrlichtRenderer.la
 %{_libdir}/libCEGUILibxmlParser.la
-#%%{_libdir}/libCEGUILuaScriptModule.la
 %{_libdir}/libCEGUISILLYImageCodec.la
+%{_libdir}/libCEGUISTBImageCodec.la
 %{_libdir}/libCEGUITGAImageCodec.la
 %{_libdir}/libCEGUITinyXMLParser.la
 %{_libdir}/libCEGUIXercesParser.la
-#%%{_libdir}/libCEGUItoluapp.la
 %{_includedir}/%{name}
 %{_pkgconfigdir}/CEGUI.pc
 %{?with_opengl:%{_pkgconfigdir}/CEGUI-OPENGL.pc}
