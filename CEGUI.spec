@@ -34,6 +34,7 @@ BuildRequires:	corona-devel >= 1.0.2
 BuildRequires:	expat-devel
 BuildRequires:	freetype-devel >= 2.0
 BuildRequires:	glew-devel
+BuildRequires:	gtk+2-devel
 BuildRequires:	irrlicht-devel >= 1.4
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.5
