@@ -1,6 +1,6 @@
 # TODO:
-# - external tinyxml
 # - external tolua++
+# - separete packages for plugins
 #
 # Conditional build:
 %bcond_without	xercesc		# build XercesParser
@@ -12,13 +12,14 @@ Summary:	CEGUI - a free library providing windowing and widgets
 Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
 Name:		CEGUI
 Version:	0.7.5
-Release:	3
+Release:	4
 License:	LGPL v2.1+ (with MIT parts)
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/crayzedsgui/%{name}-%{version}.tar.gz
 # Source0-md5:	38c79d1fdfaaa10f481c99a2ac479516
 Source1:	http://downloads.sourceforge.net/crayzedsgui/%{name}-DOCS-%{version}.tar.gz
 # Source1-md5:	cdf59df7503f752a70eea4081eaac6ef
+Patch0:		%{name}-new-tinyxml.patch
 URL:		http://www.cegui.org.uk/
 BuildRequires:	DevIL-devel
 BuildRequires:	DirectFB-devel
@@ -46,6 +47,7 @@ BuildRequires:	ois-devel
 %endif
 BuildRequires:	pcre-devel >= 5.0
 BuildRequires:	pkgconfig
+BuildRequires:	tinyxml-devel
 # for irrlicht renderer
 BuildRequires:	xorg-lib-libXxf86vm-devel
 %if %{with xercesc}
@@ -125,6 +127,7 @@ Biblioteka OgreRenderer dla CEGUI
 
 %prep
 %setup -q -a 1
+%patch0 -p1
 
 %build
 %{__libtoolize}
