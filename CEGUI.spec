@@ -1,5 +1,5 @@
 # TODO:
-# - external tolua++
+# - python
 # - separate packages for plugins
 #
 # Conditional build:
@@ -12,7 +12,7 @@ Summary:	CEGUI - a free library providing windowing and widgets
 Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
 Name:		CEGUI
 Version:	0.7.5
-Release:	4.1
+Release:	4.2
 License:	LGPL v2.1+ (with MIT parts)
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/crayzedsgui/%{name}-%{version}.tar.gz
@@ -45,6 +45,7 @@ BuildRequires:	pcre-devel >= 5.0
 BuildRequires:	pkgconfig
 BuildRequires:	sed >= 4.0
 BuildRequires:	tinyxml-devel
+BuildRequires:	tolua++-devel
 # for irrlicht renderer
 BuildRequires:	xorg-lib-libXxf86vm-devel
 %if %{with opengl}
@@ -167,6 +168,7 @@ sed -i -e 's/lua5\.1/lua51/' acinclude.m4
 %{__autoheader}
 %{__automake}
 %configure \
+	cegui_corona_config=/usr/bin/corona-config \
 	--with-default-image-codec=FreeImageImageCodec \
 	--with-default-xml-parser=LibxmlParser \
 	%{!?with_samples:--disable-samples} \
@@ -217,8 +219,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libCEGUITinyXMLParser.so
 %attr(755,root,root) %{_libdir}/libCEGUIXercesParser-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUIXercesParser.so
-%attr(755,root,root) %{_libdir}/libCEGUItoluapp-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUItoluapp.so
 
 %files docs
 %defattr(644,root,root,755)
@@ -244,7 +244,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libCEGUITGAImageCodec.la
 %{_libdir}/libCEGUITinyXMLParser.la
 %{_libdir}/libCEGUIXercesParser.la
-%{_libdir}/libCEGUItoluapp.la
 %dir %{_includedir}/%{name}
 %{_includedir}/%{name}/CEGUI*.h
 %{_includedir}/%{name}/ImageCodecModules
