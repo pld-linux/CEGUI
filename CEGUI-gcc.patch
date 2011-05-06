@@ -1,0 +1,10 @@
+--- CEGUI-0.7.5/cegui/include/CEGUIString.h.orig	2010-11-19 12:19:03.000000000 +0100
++++ CEGUI-0.7.5/cegui/include/CEGUIString.h	2011-05-06 18:14:08.251084515 +0200
+@@ -31,6 +31,7 @@
+ #define _CEGUIString_h_
+ 
+ #include "CEGUIBase.h"
++#include <cstddef>
+ #include <string>
+ #include <string.h>
+ #include <stdexcept>

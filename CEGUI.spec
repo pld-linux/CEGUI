@@ -1,6 +1,7 @@
 # TODO:
+# - actually build lua
 # - external tolua++
-# - separete packages for plugins
+# - separate packages for plugins
 #
 # Conditional build:
 %bcond_without	xercesc		# build XercesParser
@@ -20,36 +21,38 @@ Source0:	http://downloads.sourceforge.net/crayzedsgui/%{name}-%{version}.tar.gz
 Source1:	http://downloads.sourceforge.net/crayzedsgui/%{name}-DOCS-%{version}.tar.gz
 # Source1-md5:	cdf59df7503f752a70eea4081eaac6ef
 Patch0:		%{name}-new-tinyxml.patch
+Patch1:		%{name}-gcc.patch
 URL:		http://www.cegui.org.uk/
 BuildRequires:	DevIL-devel
-BuildRequires:	DirectFB-devel
+BuildRequires:	DirectFB-devel >= 1.2.0
 BuildRequires:	FreeImage-devel
-%if %{with opengl}
-BuildRequires:	OpenGL-GLU-devel
-BuildRequires:	OpenGL-glut-devel
-%endif
 BuildRequires:	SILLY-devel >= 0.1.0
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
-BuildRequires:	corona-devel >= 1.0.2
+BuildRequires:	corona-devel
 BuildRequires:	expat-devel
 BuildRequires:	freetype-devel >= 2.0
-BuildRequires:	glew-devel
-BuildRequires:	gtk+2-devel
+BuildRequires:	gtk+2-devel >= 2:2.4
 BuildRequires:	irrlicht-devel >= 1.4
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	libxml2-devel >= 1:2.6
 BuildRequires:	lua51-devel >= 5.1
 %if %{with ogre}
-BuildRequires:	ogre-devel >= 1.0.0
+BuildRequires:	ogre-devel >= 1.6.0
 BuildRequires:	ois-devel
 %endif
 BuildRequires:	pcre-devel >= 5.0
 BuildRequires:	pkgconfig
+BuildRequires:	sed >= 4.0
 BuildRequires:	tinyxml-devel
 # for irrlicht renderer
 BuildRequires:	xorg-lib-libXxf86vm-devel
+%if %{with opengl}
+BuildRequires:	OpenGL-GLU-devel
+BuildRequires:	OpenGL-glut-devel
+BuildRequires:	glew-devel
+%endif
 %if %{with xercesc}
 BuildRequires:	xerces-c-devel
 %endif
@@ -77,8 +80,6 @@ Summary:	Development files for CEGUI
 Summary(pl.UTF-8):	Pliki programistyczne dla CEGUI
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-%{?with_ogre:Requires:	%{name}-Ogre = %{version}-%{release}}
-%{?with_opengl:Requires:	%{name}-OpenGL = %{version}-%{release}}
 Requires:	freetype-devel >= 2.0
 Requires:	libstdc++-devel
 Requires:	pcre-devel >= 5.0
@@ -101,18 +102,6 @@ CEGUI documentation.
 %description docs -l pl.UTF-8
 Dokumentacja CEGUI.
 
-%package OpenGL
-Summary:	OpenGLRenderer library for CEGUI
-Summary(pl.UTF-8):	Biblioteka OpenGLRenderer dla CEGUI
-Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-
-%description OpenGL
-OpenGLRenderer library for CEGUI.
-
-%description OpenGL -l pl.UTF-8
-Biblioteka OpenGLRenderer dla CEGUI.
-
 %package Ogre
 Summary:	OgreRenderer library for CEGUI
 Summary(pl.UTF-8):	Biblioteka OgreRenderer dla CEGUI
@@ -125,9 +114,52 @@ OgreRenderer library for CEGUI.
 %description Ogre -l pl.UTF-8
 Biblioteka OgreRenderer dla CEGUI
 
+%package Ogre-devel
+Summary:	Header files for CEGUI OgreRenderer library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki CEGUI OgreRenderer
+Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	ogre-devel >= 1.6.0
+
+%description Ogre-devel
+Header files for CEGUI OgreRenderer library.
+
+%description Ogre-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki CEGUI OgreRenderer.
+
+%package OpenGL
+Summary:	OpenGLRenderer library for CEGUI
+Summary(pl.UTF-8):	Biblioteka OpenGLRenderer dla CEGUI
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description OpenGL
+OpenGLRenderer library for CEGUI.
+
+%description OpenGL -l pl.UTF-8
+Biblioteka OpenGLRenderer dla CEGUI.
+
+%package OpenGL-devel
+Summary:	Header files for CEGUI OpenGLRenderer library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki CEGUI OpenGLRenderer
+Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	OpenGL-GLU-devel
+Requires:	OpenGL-glut-devel
+Requires:	glew-devel
+
+%description OpenGL-devel
+Header files for CEGUI OpenGLRenderer library.
+
+%description OpenGL-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki CEGUI OpenGLRenderer.
+
 %prep
 %setup -q -a 1
 %patch0 -p1
+%patch1 -p1
+
+sed -i -e 's/lua5\.1/lua51/' acinclude.m4
 
 %build
 %{__libtoolize}
@@ -139,9 +171,9 @@ Biblioteka OgreRenderer dla CEGUI
 	--with-default-image-codec=FreeImageImageCodec \
 	--with-default-xml-parser=LibxmlParser \
 	%{!?with_samples:--disable-samples} \
-	--%{?with_ogre:en}%{!?with_ogre:dis}able-ogre-renderer \
-	--%{?with_opengl:en}%{!?with_opengl:dis}able-opengl-renderer \
-	--%{?with_xercesc:en}%{!?with_xercesc:dis}able-xerces-c
+	--enable-ogre-renderer%{!?with_ogre:=no} \
+	--enable-opengl-renderer%{!?with_opengl:=no} \
+	--enable-xerces-c%{!?with_xercesc:=no}
 
 %{__make}
 
@@ -174,6 +206,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libCEGUIIrrlichtRenderer.so
 %attr(755,root,root) %{_libdir}/libCEGUILibxmlParser-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUILibxmlParser.so
+%attr(755,root,root) %{_libdir}/libCEGUILuaScriptModule-%{version}.so
+%attr(755,root,root) %{_libdir}/libCEGUILuaScriptModule.so
 %attr(755,root,root) %{_libdir}/libCEGUISILLYImageCodec-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUISILLYImageCodec.so
 %attr(755,root,root) %{_libdir}/libCEGUISTBImageCodec-%{version}.so
@@ -184,6 +218,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libCEGUITinyXMLParser.so
 %attr(755,root,root) %{_libdir}/libCEGUIXercesParser-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUIXercesParser.so
+%attr(755,root,root) %{_libdir}/libCEGUItoluapp-%{version}.so
+%attr(755,root,root) %{_libdir}/libCEGUItoluapp.so
 
 %files docs
 %defattr(644,root,root,755)
@@ -195,11 +231,7 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libCEGUIBase.so
-%{?with_ogre:%attr(755,root,root) %{_libdir}/libCEGUIOgreRenderer.so}
-%{?with_opengl:%attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer.so}
 %{_libdir}/libCEGUIBase.la
-%{?with_ogre:%{_libdir}/libCEGUIOgreRenderer.la}
-%{?with_opengl:%{_libdir}/libCEGUIOpenGLRenderer.la}
 # plugins - but as their headers are included...
 %{_libdir}/libCEGUIDevILImageCodec.la
 %{_libdir}/libCEGUIExpatParser.la
@@ -207,24 +239,47 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libCEGUIFreeImageImageCodec.la
 %{_libdir}/libCEGUIIrrlichtRenderer.la
 %{_libdir}/libCEGUILibxmlParser.la
+%{_libdir}/libCEGUILuaScriptModule.la
 %{_libdir}/libCEGUISILLYImageCodec.la
 %{_libdir}/libCEGUISTBImageCodec.la
 %{_libdir}/libCEGUITGAImageCodec.la
 %{_libdir}/libCEGUITinyXMLParser.la
 %{_libdir}/libCEGUIXercesParser.la
-%{_includedir}/%{name}
+%{_libdir}/libCEGUItoluapp.la
+%dir %{_includedir}/%{name}
+%{_includedir}/%{name}/CEGUI*.h
+%{_includedir}/%{name}/ImageCodecModules
+%dir %{_includedir}/%{name}/RendererModules
+%{_includedir}/%{name}/RendererModules/Irrlicht
+%{_includedir}/%{name}/ScriptingModules
+%{_includedir}/%{name}/WindowRendererSets
+%{_includedir}/%{name}/XMLParserModules
+%{_includedir}/%{name}/elements
+%{_includedir}/%{name}/falagard
 %{_pkgconfigdir}/CEGUI.pc
-%{?with_opengl:%{_pkgconfigdir}/CEGUI-OPENGL.pc}
-%{?with_ogre:%{_pkgconfigdir}/CEGUI-OGRE.pc}
-
-%if %{with opengl}
-%files OpenGL
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer-%{version}.so
-%endif
 
 %if %{with ogre}
 %files Ogre
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libCEGUIOgreRenderer-%{version}.so
+
+%files Ogre-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libCEGUIOgreRenderer.so
+%{_libdir}/libCEGUIOgreRenderer.la
+%{_includedir}/%{name}/RendererModules/Ogre
+%{_pkgconfigdir}/CEGUI-OGRE.pc
+%endif
+
+%if %{with opengl}
+%files OpenGL
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer-%{version}.so
+
+%files OpenGL-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer.so
+%{_libdir}/libCEGUIOpenGLRenderer.la
+%{_includedir}/%{name}/RendererModules/OpenGL
+%{_pkgconfigdir}/CEGUI-OPENGL.pc
 %endif
