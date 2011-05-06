@@ -1,5 +1,4 @@
 # TODO:
-# - actually build lua
 # - external tolua++
 # - separate packages for plugins
 #
