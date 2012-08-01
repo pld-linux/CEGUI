@@ -1,5 +1,4 @@
 # TODO:
-# - python
 # - separate packages for plugins
 #
 # Conditional build:
@@ -11,16 +10,14 @@
 Summary:	CEGUI - a free library providing windowing and widgets
 Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
 Name:		CEGUI
-Version:	0.7.5
-Release:	12
+Version:	0.7.7
+Release:	0.1
 License:	LGPL v2.1+ (with MIT parts)
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/crayzedsgui/%{name}-%{version}.tar.gz
-# Source0-md5:	38c79d1fdfaaa10f481c99a2ac479516
+# Source0-md5:	8b83577f86eaa1581765dd155c7c8f24
 Source1:	http://downloads.sourceforge.net/crayzedsgui/%{name}-DOCS-%{version}.tar.gz
-# Source1-md5:	cdf59df7503f752a70eea4081eaac6ef
-Patch0:		%{name}-new-tinyxml.patch
-Patch1:		%{name}-gcc.patch
+# Source1-md5:	4d011b7e262222a4c0129ccb19014686
 URL:		http://www.cegui.org.uk/
 BuildRequires:	DevIL-devel
 BuildRequires:	DirectFB-devel >= 1.2.0
@@ -154,10 +151,33 @@ Header files for CEGUI OpenGLRenderer library.
 %description OpenGL-devel -l pl.UTF-8
 Pliki nagłówkowe biblioteki CEGUI OpenGLRenderer.
 
+%package -n python-CEGUI
+Summary:	Python binding for CEGUI
+Summary(pl.UTF-8):	Wiązania Pythona do CEGUI
+Group:		Libraries/Python
+Requires:	%{name} = %{version}-%{release}
+
+%description -n python-CEGUI
+Python binding for CEGUI.
+
+%description -n python-CEGUI -l pl.UTF-8
+Wiązania Pythona do CEGUI.
+
+%package -n python-CEGUI-Renderer-OpenGL
+Summary:	Python binding for CEGUIOpenGLRenderer library
+Summary(pl.UTF-8):	Wiązania Pythona do biblioteki CEGUIOpenGLRenderer
+Group:		Libraries/Python
+Requires:	%{name}-OpenGL = %{version}-%{release}
+Requires:	python-CEGUI = %{version}-%{release}
+
+%description -n python-CEGUI-Renderer-OpenGL
+Python binding for CEGUI OpenGL renderer library.
+
+%description -n python-CEGUI-Renderer-OpenGL -l pl.UTF-8
+Wiązania Pythona do biblioteki CEGUIOpenGLRenderer.
+
 %prep
 %setup -q -a 1
-%patch0 -p1
-%patch1 -p1
 
 sed -i -e 's/lua5\.1/lua51/' acinclude.m4
 
@@ -184,6 +204,12 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/*.la
+
+%if %{without samples}
+%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/CEGUI/{animations,fonts,imagesets,layouts,looknfeel,lua_scripts,schemes,xml_schemas}
+%endif
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -195,6 +221,8 @@ rm -rf $RPM_BUILD_ROOT
 %doc doc/README
 %attr(755,root,root) %{_libdir}/libCEGUIBase-%{version}.so
 # plugins
+%attr(755,root,root) %{_libdir}/libCEGUICoronaImageCodec-%{version}.so
+%attr(755,root,root) %{_libdir}/libCEGUICoronaImageCodec.so
 %attr(755,root,root) %{_libdir}/libCEGUIDevILImageCodec-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUIDevILImageCodec.so
 %attr(755,root,root) %{_libdir}/libCEGUIExpatParser-%{version}.so
@@ -223,15 +251,13 @@ rm -rf $RPM_BUILD_ROOT
 %files docs
 %defattr(644,root,root,755)
 %doc docs
-%dir %{_datadir}/%{name}
-%dir %{_datadir}/%{name}/xml_schemas
-%{_datadir}/%{name}/xml_schemas/*.xsd
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libCEGUIBase.so
 %{_libdir}/libCEGUIBase.la
 # plugins - but as their headers are included...
+%{_libdir}/libCEGUICoronaImageCodec.la
 %{_libdir}/libCEGUIDevILImageCodec.la
 %{_libdir}/libCEGUIExpatParser.la
 %{_libdir}/libCEGUIFalagardWRBase.la
@@ -281,3 +307,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/%{name}/RendererModules/OpenGL
 %{_pkgconfigdir}/CEGUI-OPENGL.pc
 %endif
+
+%files -n python-CEGUI
+%defattr(644,root,root,755)
+%attr(755,root,root) %{py_sitedir}/PyCEGUI.so
+
+%files -n python-CEGUI-Renderer-OpenGL
+%defattr(644,root,root,755)
+%attr(755,root,root) %{py_sitedir}/PyCEGUIOpenGLRenderer.so
