@@ -36,7 +36,7 @@ BuildRequires:	libxml2-devel >= 1:2.6
 BuildRequires:	lua51-devel >= 5.1
 %if %{with ogre}
 BuildRequires:	ogre-devel >= 1.6.0
-BuildRequires:	ois-devel
+BuildRequires:	ois-devel >= 1.0.0
 %endif
 BuildRequires:	pcre-devel >= 5.0
 BuildRequires:	pkgconfig
@@ -99,56 +99,194 @@ CEGUI documentation.
 %description docs -l pl.UTF-8
 Dokumentacja CEGUI.
 
-%package Ogre
+%package ImageCodec-Corona
+Summary:	CoronaImageCodec library for CEGUI
+Summary(pl.UTF-8):	Biblioteka CoronaImageCodec dla CEGUI
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description ImageCodec-Corona
+CoronaImageCodec library for CEGUI.
+
+%description ImageCodec-Corona -l pl.UTF-8
+Biblioteka CoronaImageCodec dla CEGUI
+
+%package ImageCodec-Corona-devel
+Summary:	Header files for CEGUI CoronaImageCodec library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki CEGUI CoronaImageCodec
+Group:		Development/Libraries
+Requires:	%{name}-ImageCodec-Corona = %{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	corona-devel
+
+%description ImageCodec-Corona-devel
+Header files for CEGUI CoronaImageCodec library.
+
+%description ImageCodec-Corona-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki CEGUI CoronaImageCodec.
+
+%package ImageCodec-DevIL
+Summary:	DevILImageCodec library for CEGUI
+Summary(pl.UTF-8):	Biblioteka DevILImageCodec dla CEGUI
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description ImageCodec-DevIL
+DevILImageCodec library for CEGUI.
+
+%description ImageCodec-DevIL -l pl.UTF-8
+Biblioteka DevILImageCodec dla CEGUI
+
+%package ImageCodec-DevIL-devel
+Summary:	Header files for CEGUI DevILImageCodec library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki CEGUI DevILImageCodec
+Group:		Development/Libraries
+Requires:	%{name}-ImageCodec-DevIL = %{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	DevIL-devel
+
+%description ImageCodec-DevIL-devel
+Header files for CEGUI DevILImageCodec library.
+
+%description ImageCodec-DevIL-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki CEGUI DevILImageCodec.
+
+%package ImageCodec-FreeImage
+Summary:	FreeImageImageCodec library for CEGUI
+Summary(pl.UTF-8):	Biblioteka FreeImageImageCodec dla CEGUI
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description ImageCodec-FreeImage
+FreeImageImageCodec library for CEGUI.
+
+%description ImageCodec-FreeImage -l pl.UTF-8
+Biblioteka FreeImageImageCodec dla CEGUI
+
+%package ImageCodec-FreeImage-devel
+Summary:	Header files for CEGUI FreeImageImageCodec library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki CEGUI FreeImageImageCodec
+Group:		Development/Libraries
+Requires:	%{name}-ImageCodec-FreeImage = %{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	FreeImage-devel
+
+%description ImageCodec-FreeImage-devel
+Header files for CEGUI FreeImageImageCodec library.
+
+%description ImageCodec-FreeImage-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki CEGUI FreeImageImageCodec.
+
+%package ImageCodec-SILLY
+Summary:	SILLYImageCodec library for CEGUI
+Summary(pl.UTF-8):	Biblioteka SILLYImageCodec dla CEGUI
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	SILLY >= 0.1.0
+
+%description ImageCodec-SILLY
+SILLYImageCodec library for CEGUI.
+
+%description ImageCodec-SILLY -l pl.UTF-8
+Biblioteka SILLYImageCodec dla CEGUI
+
+%package ImageCodec-SILLY-devel
+Summary:	Header files for CEGUI SILLYImageCodec library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki CEGUI SILLYImageCodec
+Group:		Development/Libraries
+Requires:	%{name}-ImageCodec-SILLY = %{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	SILLY-devel >= 0.1.0
+
+%description ImageCodec-SILLY-devel
+Header files for CEGUI SILLYImageCodec library.
+
+%description ImageCodec-SILLY-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki CEGUI SILLYImageCodec.
+
+%package Renderer-Irrlicht
+Summary:	IrrlichtRenderer library for CEGUI
+Summary(pl.UTF-8):	Biblioteka IrrlichtRenderer dla CEGUI
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	irrlicht >= 1.4
+
+%description Renderer-Irrlicht
+IrrlichtRenderer library for CEGUI.
+
+%description Renderer-Irrlicht -l pl.UTF-8
+Biblioteka IrrlichtRenderer dla CEGUI
+
+%package Renderer-Irrlicht-devel
+Summary:	Header files for CEGUI IrrlichtRenderer library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki CEGUI IrrlichtRenderer
+Group:		Development/Libraries
+Requires:	%{name}-Renderer-Irrlicht = %{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	irrlicht-devel >= 1.4
+
+%description Renderer-Irrlicht-devel
+Header files for CEGUI IrrlichtRenderer library.
+
+%description Renderer-Irrlicht-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki CEGUI IrrlichtRenderer.
+
+%package Renderer-Ogre
 Summary:	OgreRenderer library for CEGUI
 Summary(pl.UTF-8):	Biblioteka OgreRenderer dla CEGUI
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
+Obsoletes:	CEGUI-Ogre
 
-%description Ogre
+%description Renderer-Ogre
 OgreRenderer library for CEGUI.
 
-%description Ogre -l pl.UTF-8
+%description Renderer-Ogre -l pl.UTF-8
 Biblioteka OgreRenderer dla CEGUI
 
-%package Ogre-devel
+%package Renderer-Ogre-devel
 Summary:	Header files for CEGUI OgreRenderer library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki CEGUI OgreRenderer
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}-Renderer-Ogre = %{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
 Requires:	ogre-devel >= 1.6.0
+Obsoletes:	CEGUI-Ogre-devel
 
-%description Ogre-devel
+%description Renderer-Ogre-devel
 Header files for CEGUI OgreRenderer library.
 
-%description Ogre-devel -l pl.UTF-8
+%description Renderer-Ogre-devel -l pl.UTF-8
 Pliki nagłówkowe biblioteki CEGUI OgreRenderer.
 
-%package OpenGL
+%package Renderer-OpenGL
 Summary:	OpenGLRenderer library for CEGUI
 Summary(pl.UTF-8):	Biblioteka OpenGLRenderer dla CEGUI
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
+Obsoletes:	CEGUI-OpenGL
 
-%description OpenGL
+%description Renderer-OpenGL
 OpenGLRenderer library for CEGUI.
 
-%description OpenGL -l pl.UTF-8
+%description Renderer-OpenGL -l pl.UTF-8
 Biblioteka OpenGLRenderer dla CEGUI.
 
-%package OpenGL-devel
+%package Renderer-OpenGL-devel
 Summary:	Header files for CEGUI OpenGLRenderer library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki CEGUI OpenGLRenderer
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}-Renderer-OpenGL = %{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
 Requires:	OpenGL-GLU-devel
 Requires:	OpenGL-glut-devel
 Requires:	glew-devel
+Obsoletes:	CEGUI-OpenGL-devel
 
-%description OpenGL-devel
+%description Renderer-OpenGL-devel
 Header files for CEGUI OpenGLRenderer library.
 
-%description OpenGL-devel -l pl.UTF-8
+%description Renderer-OpenGL-devel -l pl.UTF-8
 Pliki nagłówkowe biblioteki CEGUI OpenGLRenderer.
 
 %package -n python-CEGUI
@@ -164,17 +302,17 @@ Python binding for CEGUI.
 Wiązania Pythona do CEGUI.
 
 %package -n python-CEGUI-Renderer-OpenGL
-Summary:	Python binding for CEGUIOpenGLRenderer library
-Summary(pl.UTF-8):	Wiązania Pythona do biblioteki CEGUIOpenGLRenderer
+Summary:	Python binding for CEGUI OpenGLRenderer library
+Summary(pl.UTF-8):	Wiązania Pythona do biblioteki CEGUI OpenGLRenderer
 Group:		Libraries/Python
-Requires:	%{name}-OpenGL = %{version}-%{release}
+Requires:	%{name}-Renderer-OpenGL = %{version}-%{release}
 Requires:	python-CEGUI = %{version}-%{release}
 
 %description -n python-CEGUI-Renderer-OpenGL
-Python binding for CEGUI OpenGL renderer library.
+Python binding for CEGUI OpenGLRenderer library.
 
 %description -n python-CEGUI-Renderer-OpenGL -l pl.UTF-8
-Wiązania Pythona do biblioteki CEGUIOpenGLRenderer.
+Wiązania Pythona do biblioteki CEGUI OpenGLRenderer.
 
 %prep
 %setup -q -a 1
@@ -216,29 +354,35 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
+%post	ImageCodec-Corona -p /sbin/ldconfig
+%postun	ImageCodec-Corona -p /sbin/ldconfig
+%post	ImageCodec-DevIL -p /sbin/ldconfig
+%postun	ImageCodec-DevIL -p /sbin/ldconfig
+%post	ImageCodec-FreeImage -p /sbin/ldconfig
+%postun	ImageCodec-FreeImage -p /sbin/ldconfig
+%post	ImageCodec-SILLY -p /sbin/ldconfig
+%postun	ImageCodec-SILLY -p /sbin/ldconfig
+
+%post	Renderer-Irrlicht -p /sbin/ldconfig
+%postun	Renderer-Irrlicht -p /sbin/ldconfig
+%post	Renderer-Ogre -p /sbin/ldconfig
+%postun	Renderer-Ogre -p /sbin/ldconfig
+%post	Renderer-OpenGL -p /sbin/ldconfig
+%postun	Renderer-OpenGL -p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
 %doc doc/README
 %attr(755,root,root) %{_libdir}/libCEGUIBase-%{version}.so
 # plugins
-%attr(755,root,root) %{_libdir}/libCEGUICoronaImageCodec-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUICoronaImageCodec.so
-%attr(755,root,root) %{_libdir}/libCEGUIDevILImageCodec-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUIDevILImageCodec.so
 %attr(755,root,root) %{_libdir}/libCEGUIExpatParser-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUIExpatParser.so
 %attr(755,root,root) %{_libdir}/libCEGUIFalagardWRBase-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUIFalagardWRBase.so
-%attr(755,root,root) %{_libdir}/libCEGUIFreeImageImageCodec-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUIFreeImageImageCodec.so
-%attr(755,root,root) %{_libdir}/libCEGUIIrrlichtRenderer-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUIIrrlichtRenderer.so
 %attr(755,root,root) %{_libdir}/libCEGUILibxmlParser-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUILibxmlParser.so
 %attr(755,root,root) %{_libdir}/libCEGUILuaScriptModule-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUILuaScriptModule.so
-%attr(755,root,root) %{_libdir}/libCEGUISILLYImageCodec-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUISILLYImageCodec.so
 %attr(755,root,root) %{_libdir}/libCEGUISTBImageCodec-%{version}.so
 %attr(755,root,root) %{_libdir}/libCEGUISTBImageCodec.so
 %attr(755,root,root) %{_libdir}/libCEGUITGAImageCodec-%{version}.so
@@ -257,24 +401,21 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libCEGUIBase.so
 %{_libdir}/libCEGUIBase.la
 # plugins - but as their headers are included...
-%{_libdir}/libCEGUICoronaImageCodec.la
-%{_libdir}/libCEGUIDevILImageCodec.la
 %{_libdir}/libCEGUIExpatParser.la
 %{_libdir}/libCEGUIFalagardWRBase.la
 %{_libdir}/libCEGUIFreeImageImageCodec.la
-%{_libdir}/libCEGUIIrrlichtRenderer.la
 %{_libdir}/libCEGUILibxmlParser.la
 %{_libdir}/libCEGUILuaScriptModule.la
-%{_libdir}/libCEGUISILLYImageCodec.la
 %{_libdir}/libCEGUISTBImageCodec.la
 %{_libdir}/libCEGUITGAImageCodec.la
 %{_libdir}/libCEGUITinyXMLParser.la
 %{_libdir}/libCEGUIXercesParser.la
 %dir %{_includedir}/%{name}
 %{_includedir}/%{name}/CEGUI*.h
-%{_includedir}/%{name}/ImageCodecModules
+%dir %{_includedir}/%{name}/ImageCodecModules
+%{_includedir}/%{name}/ImageCodecModules/STBImageCodec
+%{_includedir}/%{name}/ImageCodecModules/TGAImageCodec
 %dir %{_includedir}/%{name}/RendererModules
-%{_includedir}/%{name}/RendererModules/Irrlicht
 %{_includedir}/%{name}/ScriptingModules
 %{_includedir}/%{name}/WindowRendererSets
 %{_includedir}/%{name}/XMLParserModules
@@ -282,25 +423,75 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/%{name}/falagard
 %{_pkgconfigdir}/CEGUI.pc
 
+%files ImageCodec-Corona
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libCEGUICoronaImageCodec-%{version}.so
+%attr(755,root,root) %{_libdir}/libCEGUICoronaImageCodec.so
+
+%files ImageCodec-Corona-devel
+%defattr(644,root,root,755)
+%{_libdir}/libCEGUICoronaImageCodec.la
+%{_includedir}/%{name}/ImageCodecModules/CoronaImageCodec
+
+%files ImageCodec-DevIL
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libCEGUIDevILImageCodec-%{version}.so
+%attr(755,root,root) %{_libdir}/libCEGUIDevILImageCodec.so
+
+%files ImageCodec-DevIL-devel
+%defattr(644,root,root,755)
+%{_libdir}/libCEGUIDevILImageCodec.la
+%{_includedir}/%{name}/ImageCodecModules/DevILImageCodec
+
+%files ImageCodec-FreeImage
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libCEGUIFreeImageImageCodec-%{version}.so
+%attr(755,root,root) %{_libdir}/libCEGUIFreeImageImageCodec.so
+
+%files ImageCodec-FreeImage-devel
+%defattr(644,root,root,755)
+%{_libdir}/libCEGUIFreeImageImageCodec.la
+%{_includedir}/%{name}/ImageCodecModules/FreeImageImageCodec
+
+%files ImageCodec-SILLY
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libCEGUISILLYImageCodec-%{version}.so
+%attr(755,root,root) %{_libdir}/libCEGUISILLYImageCodec.so
+
+%files ImageCodec-SILLY-devel
+%defattr(644,root,root,755)
+%{_libdir}/libCEGUISILLYImageCodec.la
+%{_includedir}/%{name}/ImageCodecModules/SILLYImageCodec
+
+%files Renderer-Irrlicht
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libCEGUIIrrlichtRenderer-%{version}.so
+%attr(755,root,root) %{_libdir}/libCEGUIIrrlichtRenderer.so
+
+%files Renderer-Irrlicht-devel
+%defattr(644,root,root,755)
+%{_libdir}/libCEGUIIrrlichtRenderer.la
+%{_includedir}/%{name}/RendererModules/Irrlicht
+
 %if %{with ogre}
-%files Ogre
+%files Renderer-Ogre
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libCEGUIOgreRenderer-%{version}.so
-
-%files Ogre-devel
-%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libCEGUIOgreRenderer.so
+
+%files Renderer-Ogre-devel
+%defattr(644,root,root,755)
 %{_libdir}/libCEGUIOgreRenderer.la
 %{_includedir}/%{name}/RendererModules/Ogre
 %{_pkgconfigdir}/CEGUI-OGRE.pc
 %endif
 
 %if %{with opengl}
-%files OpenGL
+%files Renderer-OpenGL
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer-%{version}.so
 
-%files OpenGL-devel
+%files Renderer-OpenGL-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer.so
 %{_libdir}/libCEGUIOpenGLRenderer.la
