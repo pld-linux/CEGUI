@@ -301,6 +301,19 @@ Python binding for CEGUI.
 %description -n python-CEGUI -l pl.UTF-8
 Wiązania Pythona do CEGUI.
 
+%package -n python-CEGUI-Renderer-Ogre
+Summary:	Python binding for CEGUI OgreRenderer library
+Summary(pl.UTF-8):	Wiązania Pythona do biblioteki CEGUI OgreRenderer
+Group:		Libraries/Python
+Requires:	%{name}-Renderer-Ogre = %{version}-%{release}
+Requires:	python-CEGUI = %{version}-%{release}
+
+%description -n python-CEGUI-Renderer-Ogre
+Python binding for CEGUI OgreRenderer library.
+
+%description -n python-CEGUI-Renderer-Ogre -l pl.UTF-8
+Wiązania Pythona do biblioteki CEGUI OgreRenderer.
+
 %package -n python-CEGUI-Renderer-OpenGL
 Summary:	Python binding for CEGUI OpenGLRenderer library
 Summary(pl.UTF-8):	Wiązania Pythona do biblioteki CEGUI OpenGLRenderer
@@ -503,6 +516,14 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{py_sitedir}/PyCEGUI.so
 
+%if %{with ogre}
+%files -n python-CEGUI-Renderer-Ogre
+%defattr(644,root,root,755)
+%attr(755,root,root) %{py_sitedir}/PyCEGUIOgreRenderer.so
+%endif
+
+%if %{with opengl}
 %files -n python-CEGUI-Renderer-OpenGL
 %defattr(644,root,root,755)
 %attr(755,root,root) %{py_sitedir}/PyCEGUIOpenGLRenderer.so
+%endif
