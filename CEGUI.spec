@@ -416,7 +416,6 @@ rm -rf $RPM_BUILD_ROOT
 # plugins - but as their headers are included...
 %{_libdir}/libCEGUIExpatParser.la
 %{_libdir}/libCEGUIFalagardWRBase.la
-%{_libdir}/libCEGUIFreeImageImageCodec.la
 %{_libdir}/libCEGUILibxmlParser.la
 %{_libdir}/libCEGUILuaScriptModule.la
 %{_libdir}/libCEGUISTBImageCodec.la
