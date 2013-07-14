@@ -18,13 +18,14 @@ Source0:	http://downloads.sourceforge.net/crayzedsgui/cegui-%{version}.tar.gz
 # Source0-md5:	f72951f0cc0374bb2294035cb639bb83
 Source1:	http://downloads.sourceforge.net/crayzedsgui/cegui-docs-%{version}.tar.gz
 # Source1-md5:	19029d82148fb6c4145c757ee59ccf8a
+Patch0:		pthread.patch
+Patch1:		python-sitedir.patch
 URL:		http://www.cegui.org.uk/
 BuildRequires:	DevIL-devel
 BuildRequires:	DirectFB-devel >= 1.2.0
 BuildRequires:	FreeImage-devel
 BuildRequires:	SILLY-devel >= 0.1.0
-BuildRequires:	autoconf >= 2.59
-BuildRequires:	automake
+BuildRequires:	cmake
 BuildRequires:	corona-devel
 BuildRequires:	expat-devel
 BuildRequires:	freetype-devel >= 2.0
@@ -46,6 +47,7 @@ BuildRequires:	tolua++-devel
 # for irrlicht renderer
 BuildRequires:	xorg-lib-libXxf86vm-devel
 %if %{with opengl}
+BuildRequires:	GLM
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-glut-devel
 BuildRequires:	glew-devel
@@ -204,6 +206,33 @@ Header files for CEGUI SILLYImageCodec library.
 %description ImageCodec-SILLY-devel -l pl.UTF-8
 Pliki nagłówkowe biblioteki CEGUI SILLYImageCodec.
 
+%package Renderer-DirectFB
+Summary:	DirectFBRenderer library for CEGUI
+Summary(pl.UTF-8):	Biblioteka DirectFBRenderer dla CEGUI
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	DirectFB >= 1.2.0
+
+%description Renderer-DirectFB
+DirectFBRenderer library for CEGUI.
+
+%description Renderer-DirectFB -l pl.UTF-8
+Biblioteka DirectFBRenderer dla CEGUI
+
+%package Renderer-DirectFB-devel
+Summary:	Header files for CEGUI DirectFBRenderer library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki CEGUI DirectFBRenderer
+Group:		Development/Libraries
+Requires:	%{name}-Renderer-DirectFB = %{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	DirectFB-devel >= 1.2.0
+
+%description Renderer-DirectFB-devel
+Header files for CEGUI DirectFBRenderer library.
+
+%description Renderer-DirectFB-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki CEGUI DirectFBRenderer.
+
 %package Renderer-Irrlicht
 Summary:	IrrlichtRenderer library for CEGUI
 Summary(pl.UTF-8):	Biblioteka IrrlichtRenderer dla CEGUI
@@ -328,37 +357,33 @@ Python binding for CEGUI OpenGLRenderer library.
 Wiązania Pythona do biblioteki CEGUI OpenGLRenderer.
 
 %prep
-%setup -q -a 1
-
-sed -i -e 's/lua5\.1/lua51/' acinclude.m4
+%setup -q -a 1 -n cegui-%{version}
+%patch0 -p1
+%patch1 -p1
 
 %build
-%{__libtoolize}
-%{__aclocal}
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-%configure \
-	cegui_corona_config=/usr/bin/corona-config \
-	--with-default-image-codec=FreeImageImageCodec \
-	--with-default-xml-parser=LibxmlParser \
-	%{!?with_samples:--disable-samples} \
-	--enable-ogre-renderer%{!?with_ogre:=no} \
-	--enable-opengl-renderer%{!?with_opengl:=no} \
-	--enable-xerces-c%{!?with_xercesc:=no}
+install -d build
+cd build
+%cmake \
+	../ \
+	-DCEGUI_SAMPLES_ENABLED:BOOL=%{?with_samples:ON}%{!?with_samples:OFF} \
+	-DCEGUI_BUILD_RENDERER_OPENGL:BOOL=%{?with_opengl:ON}%{!?with_opengl:OFF} \
+	-DCEGUI_BUILD_RENDERER_OGRE:BOOL=%{?with_ogre:ON}%{!?with_ogre:OFF} \
+	-DCEGUI_BUILD_XMLPARSER_XERCES:BOOL=%{?with_xercesc:ON}%{!?with_xercesc:OFF} \
+	-DCEGUI_OPTION_DEFAULT_IMAGECODEC:STRING=FreeImageImageCodec \
+	-DCEGUI_OPTION_DEFAULT_XMLPARSER:STRING=LibxmlParser \
+	-DCEGUI_PYTHON_INSTALL_DIR=%{py_sitedir}
 
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
+%{__make} -C build install/fast \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/*.la
-
 %if %{without samples}
-%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/CEGUI/{animations,fonts,imagesets,layouts,looknfeel,lua_scripts,schemes,xml_schemas}
+%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/cegui-0/{animations,fonts,imagesets,layouts,looknfeel,lua_scripts,schemes,xml_schemas}
 %endif
 
 %clean
@@ -386,143 +411,145 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc doc/README
-%attr(755,root,root) %{_libdir}/libCEGUIBase-%{version}.so
+%attr(755,root,root) %{_libdir}/libCEGUIBase-0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libCEGUIBase-0.so.3
+%attr(755,root,root) %{_libdir}/libCEGUICommonDialogs-0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libCEGUICommonDialogs-0.so.3
+%attr(755,root,root) %{_libdir}/libCEGUINullRenderer-0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libCEGUINullRenderer-0.so.3
+%attr(755,root,root) %{_libdir}/libCEGUILuaScriptModule-0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libCEGUILuaScriptModule-0.so.3
 # plugins
-%attr(755,root,root) %{_libdir}/libCEGUIExpatParser-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUIExpatParser.so
-%attr(755,root,root) %{_libdir}/libCEGUIFalagardWRBase-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUIFalagardWRBase.so
-%attr(755,root,root) %{_libdir}/libCEGUILibxmlParser-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUILibxmlParser.so
-%attr(755,root,root) %{_libdir}/libCEGUILuaScriptModule-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUILuaScriptModule.so
-%attr(755,root,root) %{_libdir}/libCEGUISTBImageCodec-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUISTBImageCodec.so
-%attr(755,root,root) %{_libdir}/libCEGUITGAImageCodec-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUITGAImageCodec.so
-%attr(755,root,root) %{_libdir}/libCEGUITinyXMLParser-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUITinyXMLParser.so
-%attr(755,root,root) %{_libdir}/libCEGUIXercesParser-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUIXercesParser.so
+%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUICoreWindowRendererSet.so
+%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUIExpatParser.so
+%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUILibXMLParser.so
+%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUISTBImageCodec.so
+%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUITGAImageCodec.so
+%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUITinyXMLParser.so
+%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUIXercesParser.so
 
 %files docs
 %defattr(644,root,root,755)
-%doc docs
+%doc cegui-docs-0.8.2/*
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libCEGUIBase.so
-%{_libdir}/libCEGUIBase.la
-# plugins - but as their headers are included...
-%{_libdir}/libCEGUIExpatParser.la
-%{_libdir}/libCEGUIFalagardWRBase.la
-%{_libdir}/libCEGUILibxmlParser.la
-%{_libdir}/libCEGUILuaScriptModule.la
-%{_libdir}/libCEGUISTBImageCodec.la
-%{_libdir}/libCEGUITGAImageCodec.la
-%{_libdir}/libCEGUITinyXMLParser.la
-%{_libdir}/libCEGUIXercesParser.la
-%dir %{_includedir}/%{name}
-%{_includedir}/%{name}/CEGUI*.h
-%dir %{_includedir}/%{name}/ImageCodecModules
-%{_includedir}/%{name}/ImageCodecModules/STBImageCodec
-%{_includedir}/%{name}/ImageCodecModules/TGAImageCodec
-%dir %{_includedir}/%{name}/RendererModules
-%{_includedir}/%{name}/ScriptingModules
-%{_includedir}/%{name}/WindowRendererSets
-%{_includedir}/%{name}/XMLParserModules
-%{_includedir}/%{name}/elements
-%{_includedir}/%{name}/falagard
-%{_pkgconfigdir}/CEGUI.pc
+%attr(755,root,root) %{_bindir}/toluappcegui-0.8
+%attr(755,root,root) %{_libdir}/libCEGUIBase-0.so
+%attr(755,root,root) %{_libdir}/libCEGUICommonDialogs-0.so
+%attr(755,root,root) %{_libdir}/libCEGUILuaScriptModule-0.so
+%attr(755,root,root) %{_libdir}/libCEGUINullRenderer-0.so
+%dir %{_includedir}/cegui-0
+%dir %{_includedir}/cegui-0/%{name}
+%{_includedir}/cegui-0/%{name}/*.h
+%{_includedir}/cegui-0/%{name}/CommonDialogs
+%dir %{_includedir}/cegui-0/%{name}/ImageCodecModules
+%{_includedir}/cegui-0/%{name}/ImageCodecModules/STB
+%{_includedir}/cegui-0/%{name}/ImageCodecModules/TGA
+%dir %{_includedir}/cegui-0/%{name}/RendererModules
+%{_includedir}/cegui-0/%{name}/RendererModules/Null
+%{_includedir}/cegui-0/%{name}/ScriptModules
+%{_includedir}/cegui-0/%{name}/WindowRendererSets
+%{_includedir}/cegui-0/%{name}/XMLParserModules
+%{_includedir}/cegui-0/%{name}/falagard
+%{_includedir}/cegui-0/%{name}/widgets
+%{_pkgconfigdir}/CEGUI-0.pc
+%{_pkgconfigdir}/CEGUI-0-LUA.pc
+%{_pkgconfigdir}/CEGUI-0-NULL.pc
 
 %files ImageCodec-Corona
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libCEGUICoronaImageCodec-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUICoronaImageCodec.so
+%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUICoronaImageCodec.so
 
 %files ImageCodec-Corona-devel
 %defattr(644,root,root,755)
-%{_libdir}/libCEGUICoronaImageCodec.la
-%{_includedir}/%{name}/ImageCodecModules/CoronaImageCodec
+%{_includedir}/cegui-0/%{name}/ImageCodecModules/Corona
 
 %files ImageCodec-DevIL
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libCEGUIDevILImageCodec-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUIDevILImageCodec.so
+%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUIDevILImageCodec.so
 
 %files ImageCodec-DevIL-devel
 %defattr(644,root,root,755)
-%{_libdir}/libCEGUIDevILImageCodec.la
-%{_includedir}/%{name}/ImageCodecModules/DevILImageCodec
+%{_includedir}/cegui-0/%{name}/ImageCodecModules/DevIL
 
 %files ImageCodec-FreeImage
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libCEGUIFreeImageImageCodec-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUIFreeImageImageCodec.so
+%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUIFreeImageImageCodec.so
 
 %files ImageCodec-FreeImage-devel
 %defattr(644,root,root,755)
-%{_libdir}/libCEGUIFreeImageImageCodec.la
-%{_includedir}/%{name}/ImageCodecModules/FreeImageImageCodec
+%{_includedir}/cegui-0/%{name}/ImageCodecModules/FreeImage
 
 %files ImageCodec-SILLY
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libCEGUISILLYImageCodec-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUISILLYImageCodec.so
+%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUISILLYImageCodec.so
 
 %files ImageCodec-SILLY-devel
 %defattr(644,root,root,755)
-%{_libdir}/libCEGUISILLYImageCodec.la
-%{_includedir}/%{name}/ImageCodecModules/SILLYImageCodec
+%{_includedir}/cegui-0/%{name}/ImageCodecModules/SILLY
+
+%files Renderer-DirectFB
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libCEGUIDirectFBRenderer-0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libCEGUIDirectFBRenderer-0.so.3
+
+%files Renderer-DirectFB-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libCEGUIDirectFBRenderer-0.so
+%{_includedir}/cegui-0/%{name}/RendererModules/DirectFB
 
 %files Renderer-Irrlicht
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libCEGUIIrrlichtRenderer-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUIIrrlichtRenderer.so
+%attr(755,root,root) %{_libdir}/libCEGUIIrrlichtRenderer-0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libCEGUIIrrlichtRenderer-0.so.3
 
 %files Renderer-Irrlicht-devel
 %defattr(644,root,root,755)
-%{_libdir}/libCEGUIIrrlichtRenderer.la
-%{_includedir}/%{name}/RendererModules/Irrlicht
+%{_includedir}/cegui-0/%{name}/RendererModules/Irrlicht
+%attr(755,root,root) %{_libdir}/libCEGUIIrrlichtRenderer-0.so
+%{_pkgconfigdir}/CEGUI-0-IRRLICHT.pc
 
 %if %{with ogre}
 %files Renderer-Ogre
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libCEGUIOgreRenderer-%{version}.so
-%attr(755,root,root) %{_libdir}/libCEGUIOgreRenderer.so
+%attr(755,root,root) %{_libdir}/libCEGUIOgreRenderer-0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libCEGUIOgreRenderer-0.so.3
 
 %files Renderer-Ogre-devel
 %defattr(644,root,root,755)
-%{_libdir}/libCEGUIOgreRenderer.la
-%{_includedir}/%{name}/RendererModules/Ogre
-%{_pkgconfigdir}/CEGUI-OGRE.pc
+%{_includedir}/cegui-0/%{name}/RendererModules/Ogre
+%attr(755,root,root) %{_libdir}/libCEGUIOgreRenderer-0.so
+%{_pkgconfigdir}/CEGUI-0-OGRE.pc
 %endif
 
 %if %{with opengl}
 %files Renderer-OpenGL
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer-%{version}.so
+%attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer-0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libCEGUIOpenGLRenderer-0.so.3
 
 %files Renderer-OpenGL-devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer.so
-%{_libdir}/libCEGUIOpenGLRenderer.la
-%{_includedir}/%{name}/RendererModules/OpenGL
-%{_pkgconfigdir}/CEGUI-OPENGL.pc
+%attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer-0.so
+%{_includedir}/cegui-0/%{name}/RendererModules/OpenGL
+%{_pkgconfigdir}/CEGUI-0-OPENGL.pc
+%{_pkgconfigdir}/CEGUI-0-OPENGL3.pc
 %endif
 
 %files -n python-CEGUI
 %defattr(644,root,root,755)
-%attr(755,root,root) %{py_sitedir}/PyCEGUI.so
+%attr(755,root,root) %{py_sitedir}/cegui-0.8/PyCEGUI.so
+%attr(755,root,root) %{py_sitedir}/cegui-0.8/PyCEGUINullRenderer.so
 
 %if %{with ogre}
 %files -n python-CEGUI-Renderer-Ogre
 %defattr(644,root,root,755)
-%attr(755,root,root) %{py_sitedir}/PyCEGUIOgreRenderer.so
+%attr(755,root,root) %{py_sitedir}/cegui-0.8/PyCEGUIOgreRenderer.so
 %endif
 
 %if %{with opengl}
 %files -n python-CEGUI-Renderer-OpenGL
 %defattr(644,root,root,755)
-%attr(755,root,root) %{py_sitedir}/PyCEGUIOpenGLRenderer.so
+%attr(755,root,root) %{py_sitedir}/cegui-0.8/PyCEGUIOpenGLRenderer.so
 %endif
