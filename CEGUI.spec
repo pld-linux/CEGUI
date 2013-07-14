@@ -11,7 +11,7 @@ Summary:	CEGUI - a free library providing windowing and widgets
 Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
 Name:		CEGUI
 Version:	0.8.2
-Release:	1
+Release:	2
 License:	LGPL v2.1+ (with MIT parts)
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/crayzedsgui/cegui-%{version}.tar.gz
@@ -420,6 +420,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libCEGUILuaScriptModule-0.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libCEGUILuaScriptModule-0.so.3
 # plugins
+%dir %{_libdir}/cegui-0.8
 %attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUICoreWindowRendererSet.so
 %attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUIExpatParser.so
 %attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUILibXMLParser.so
@@ -539,6 +540,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n python-CEGUI
 %defattr(644,root,root,755)
+%dir %{py_sitedir}/cegui-0.8
 %attr(755,root,root) %{py_sitedir}/cegui-0.8/PyCEGUI.so
 %attr(755,root,root) %{py_sitedir}/cegui-0.8/PyCEGUINullRenderer.so
 
