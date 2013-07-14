@@ -1,0 +1,9 @@
+--- cegui-0.8.2/cegui/src/RendererModules/Ogre/CMakeLists.txt~	2013-06-12 10:06:54.000000000 +0200
++++ cegui-0.8.2/cegui/src/RendererModules/Ogre/CMakeLists.txt	2013-07-12 08:10:04.515845269 +0200
+@@ -4,5 +4,5 @@
+ cegui_add_library(${CEGUI_TARGET_NAME} CORE_SOURCE_FILES CORE_HEADER_FILES)
+ cegui_add_dependency(${CEGUI_TARGET_NAME} OGRE)
+ 
+-cegui_target_link_libraries(${CEGUI_TARGET_NAME} ${CEGUI_BASE_LIBNAME})
++cegui_target_link_libraries(${CEGUI_TARGET_NAME} ${CEGUI_BASE_LIBNAME} -lpthread)
+ 
