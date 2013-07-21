@@ -1,0 +1,11 @@
+--- cegui-0.8.2/cmake/FindGLFW.cmake.orig	2013-06-12 10:06:54.000000000 +0200
++++ cegui-0.8.2/cmake/FindGLFW.cmake	2013-07-21 08:02:52.345531795 +0200
+@@ -3,7 +3,7 @@
+ ################################################################################
+ include(FindPackageHandleStandardArgs)
+ 
+-find_path(GLFW_H_PATH NAMES GL/glfw.h glfw.h)
++find_path(GLFW_H_PATH NAMES GLFW/glfw3.h GL/glfw.h glfw.h)
+ find_library(GLFW_LIB NAMES glfw PATH_SUFFIXES dynamic)
+ find_library(GLFW_LIB_DBG NAMES glfw_d PATH_SUFFIXES dynamic)
+ mark_as_advanced(GLFW_H_PATH GLFW_LIB GLFW_LIB_DBG)

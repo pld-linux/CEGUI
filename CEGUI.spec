@@ -1,5 +1,3 @@
-# TODO:
-# - separate packages for plugins
 #
 # Conditional build:
 %bcond_without	xercesc		# build XercesParser
@@ -20,42 +18,47 @@ Source1:	http://downloads.sourceforge.net/crayzedsgui/cegui-docs-%{version}.tar.
 # Source1-md5:	19029d82148fb6c4145c757ee59ccf8a
 Patch0:		pthread.patch
 Patch1:		python-sitedir.patch
+Patch2:		%{name}-glfw3.patch
 URL:		http://www.cegui.org.uk/
 BuildRequires:	DevIL-devel
 BuildRequires:	DirectFB-devel >= 1.2.0
 BuildRequires:	FreeImage-devel
 BuildRequires:	SILLY-devel >= 0.1.0
-BuildRequires:	cmake
+BuildRequires:	boost-devel >= 1.36.0
+BuildRequires:	cmake >= 2.8
 BuildRequires:	corona-devel
+BuildRequires:	doxygen
 BuildRequires:	expat-devel
+BuildRequires:	fribidi-devel
 BuildRequires:	freetype-devel >= 2.0
+BuildRequires:	glfw-devel
 BuildRequires:	gtk+2-devel >= 2:2.4
 BuildRequires:	irrlicht-devel >= 1.4
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	libxml2-devel >= 1:2.6
 BuildRequires:	lua51-devel >= 5.1
+BuildRequires:	minizip-devel
 %if %{with ogre}
 BuildRequires:	ogre-devel >= 1.6.0
 BuildRequires:	ois-devel >= 1.0.0
 %endif
 BuildRequires:	pcre-devel >= 5.0
 BuildRequires:	pkgconfig
+BuildRequires:	python-devel
+BuildRequires:	rapidxml
 BuildRequires:	sed >= 4.0
 BuildRequires:	tinyxml-devel
 BuildRequires:	tolua++-devel
+%{?with_xercesc:BuildRequires:	xerces-c-devel}
 # for irrlicht renderer
 BuildRequires:	xorg-lib-libXxf86vm-devel
 %if %{with opengl}
 BuildRequires:	GLM
 BuildRequires:	OpenGL-GLU-devel
-BuildRequires:	OpenGL-glut-devel
 BuildRequires:	glew-devel
+BuildRequires:	glfw-devel
 %endif
-%if %{with xercesc}
-BuildRequires:	xerces-c-devel
-%endif
-Requires:	irrlicht >= 1.4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -205,6 +208,67 @@ Header files for CEGUI SILLYImageCodec library.
 
 %description ImageCodec-SILLY-devel -l pl.UTF-8
 Pliki nagłówkowe biblioteki CEGUI SILLYImageCodec.
+
+%package Parser-Expat
+Summary:	Expat-based XML parser module
+Summary(pl.UTF-8):	Moduł analizatora XML oparty na bibliotece Expat
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description Parser-Expat
+Expat-based XML parser module.
+
+%description Parser-Expat -l pl.UTF-8
+Moduł analizatora XML oparty na bibliotece Expat.
+
+%package Parser-LibXML
+Summary:	LibXML-based XML parser module
+Summary(pl.UTF-8):	Moduł analizatora XML oparty na bibliotece LibXML
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	libxml2 >= 1:2.6
+
+%description Parser-LibXML
+LibXML-based XML parser module.
+
+%description Parser-LibXML -l pl.UTF-8
+Moduł analizatora XML oparty na bibliotece LibXML.
+
+%package Parser-RapidXML
+Summary:	RapidXML-based XML parser module
+Summary(pl.UTF-8):	Moduł analizatora XML oparty na bibliotece RapidXML
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description Parser-RapidXML
+RapidXML-based XML parser module.
+
+%description Parser-RapidXML -l pl.UTF-8
+Moduł analizatora XML oparty na bibliotece RapidXML.
+
+%package Parser-TinyXML
+Summary:	TinyXML-based XML parser module
+Summary(pl.UTF-8):	Moduł analizatora XML oparty na bibliotece TinyXML
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description Parser-TinyXML
+TinyXML-based XML parser module.
+
+%description Parser-TinyXML -l pl.UTF-8
+Moduł analizatora XML oparty na bibliotece TinyXML.
+
+%package Parser-Xerces
+Summary:	Xerces-based XML parser module
+Summary(pl.UTF-8):	Moduł analizatora XML oparty na bibliotece Xerces
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description Parser-Xerces
+Xerces-based XML parser module.
+
+%description Parser-Xerces -l pl.UTF-8
+Moduł analizatora XML oparty na bibliotece Xerces.
 
 %package Renderer-DirectFB
 Summary:	DirectFBRenderer library for CEGUI
@@ -360,12 +424,12 @@ Wiązania Pythona do biblioteki CEGUI OpenGLRenderer.
 %setup -q -a 1 -n cegui-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 install -d build
 cd build
-%cmake \
-	../ \
+%cmake .. \
 	-DCEGUI_SAMPLES_ENABLED:BOOL=%{?with_samples:ON}%{!?with_samples:OFF} \
 	-DCEGUI_BUILD_RENDERER_OPENGL:BOOL=%{?with_opengl:ON}%{!?with_opengl:OFF} \
 	-DCEGUI_BUILD_RENDERER_OGRE:BOOL=%{?with_ogre:ON}%{!?with_ogre:OFF} \
@@ -392,15 +456,6 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
-%post	ImageCodec-Corona -p /sbin/ldconfig
-%postun	ImageCodec-Corona -p /sbin/ldconfig
-%post	ImageCodec-DevIL -p /sbin/ldconfig
-%postun	ImageCodec-DevIL -p /sbin/ldconfig
-%post	ImageCodec-FreeImage -p /sbin/ldconfig
-%postun	ImageCodec-FreeImage -p /sbin/ldconfig
-%post	ImageCodec-SILLY -p /sbin/ldconfig
-%postun	ImageCodec-SILLY -p /sbin/ldconfig
-
 %post	Renderer-Irrlicht -p /sbin/ldconfig
 %postun	Renderer-Irrlicht -p /sbin/ldconfig
 %post	Renderer-Ogre -p /sbin/ldconfig
@@ -422,12 +477,8 @@ rm -rf $RPM_BUILD_ROOT
 # plugins
 %dir %{_libdir}/cegui-0.8
 %attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUICoreWindowRendererSet.so
-%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUIExpatParser.so
-%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUILibXMLParser.so
 %attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUISTBImageCodec.so
 %attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUITGAImageCodec.so
-%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUITinyXMLParser.so
-%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUIXercesParser.so
 
 %files docs
 %defattr(644,root,root,755)
@@ -489,6 +540,26 @@ rm -rf $RPM_BUILD_ROOT
 %files ImageCodec-SILLY-devel
 %defattr(644,root,root,755)
 %{_includedir}/cegui-0/%{name}/ImageCodecModules/SILLY
+
+%files Parser-Expat
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUIExpatParser.so
+
+%files Parser-LibXML
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUILibXMLParser.so
+
+%files Parser-RapidXML
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUIRapidXMLParser.so
+
+%files Parser-TinyXML
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUITinyXMLParser.so
+
+%files Parser-Xerces
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUIXercesParser.so
 
 %files Renderer-DirectFB
 %defattr(644,root,root,755)
