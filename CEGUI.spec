@@ -25,6 +25,7 @@ BuildRequires:	DirectFB-devel >= 1.2.0
 BuildRequires:	FreeImage-devel
 BuildRequires:	SILLY-devel >= 0.1.0
 BuildRequires:	boost-devel >= 1.36.0
+BuildRequires:	boost-python-devel >= 1.36.0
 BuildRequires:	cmake >= 2.8
 BuildRequires:	corona-devel
 BuildRequires:	doxygen
@@ -467,13 +468,13 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc doc/README
 %attr(755,root,root) %{_libdir}/libCEGUIBase-0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUIBase-0.so.3
+%attr(755,root,root) %ghost %{_libdir}/libCEGUIBase-0.so.2
 %attr(755,root,root) %{_libdir}/libCEGUICommonDialogs-0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUICommonDialogs-0.so.3
+%attr(755,root,root) %ghost %{_libdir}/libCEGUICommonDialogs-0.so.2
 %attr(755,root,root) %{_libdir}/libCEGUINullRenderer-0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUINullRenderer-0.so.3
+%attr(755,root,root) %ghost %{_libdir}/libCEGUINullRenderer-0.so.2
 %attr(755,root,root) %{_libdir}/libCEGUILuaScriptModule-0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUILuaScriptModule-0.so.3
+%attr(755,root,root) %ghost %{_libdir}/libCEGUILuaScriptModule-0.so.2
 # plugins
 %dir %{_libdir}/cegui-0.8
 %attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUICoreWindowRendererSet.so
@@ -482,7 +483,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files docs
 %defattr(644,root,root,755)
-%doc cegui-docs-0.8.2/*
+%doc cegui-docs-0.8.3/*
 
 %files devel
 %defattr(644,root,root,755)
@@ -564,7 +565,7 @@ rm -rf $RPM_BUILD_ROOT
 %files Renderer-DirectFB
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libCEGUIDirectFBRenderer-0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUIDirectFBRenderer-0.so.3
+%attr(755,root,root) %ghost %{_libdir}/libCEGUIDirectFBRenderer-0.so.2
 
 %files Renderer-DirectFB-devel
 %defattr(644,root,root,755)
@@ -574,7 +575,7 @@ rm -rf $RPM_BUILD_ROOT
 %files Renderer-Irrlicht
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libCEGUIIrrlichtRenderer-0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUIIrrlichtRenderer-0.so.3
+%attr(755,root,root) %ghost %{_libdir}/libCEGUIIrrlichtRenderer-0.so.2
 
 %files Renderer-Irrlicht-devel
 %defattr(644,root,root,755)
@@ -586,7 +587,7 @@ rm -rf $RPM_BUILD_ROOT
 %files Renderer-Ogre
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libCEGUIOgreRenderer-0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUIOgreRenderer-0.so.3
+%attr(755,root,root) %ghost %{_libdir}/libCEGUIOgreRenderer-0.so.2
 
 %files Renderer-Ogre-devel
 %defattr(644,root,root,755)
@@ -599,7 +600,7 @@ rm -rf $RPM_BUILD_ROOT
 %files Renderer-OpenGL
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libCEGUIOpenGLRenderer-0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUIOpenGLRenderer-0.so.3
+%attr(755,root,root) %ghost %{_libdir}/libCEGUIOpenGLRenderer-0.so.2
 
 %files Renderer-OpenGL-devel
 %defattr(644,root,root,755)
