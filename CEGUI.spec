@@ -438,7 +438,7 @@ cd build
 	-DCEGUI_OPTION_DEFAULT_XMLPARSER:STRING=LibxmlParser \
 	-DCEGUI_PYTHON_INSTALL_DIR=%{py_sitedir}
 
-%{__make}
+%{__make} -j1
 
 %install
 rm -rf $RPM_BUILD_ROOT
