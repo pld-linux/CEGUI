@@ -8,16 +8,15 @@
 Summary:	CEGUI - a free library providing windowing and widgets
 Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
 Name:		CEGUI
-Version:	0.8.3
-Release:	2
+Version:	0.8.4
+Release:	1
 License:	LGPL v2.1+ (with MIT parts)
 Group:		Libraries
-Source0:	http://downloads.sourceforge.net/crayzedsgui/cegui-%{version}.tar.gz
-# Source0-md5:	142cca3648cee034e04d0f61bd9863ce
-Source1:	http://downloads.sourceforge.net/crayzedsgui/cegui-docs-%{version}.tar.gz
-# Source1-md5:	af2931622f9222a6d945c76a84059d70
+Source0:	http://downloads.sourceforge.net/crayzedsgui/cegui-%{version}.tar.bz2
+# Source0-md5:	344917301b5ed867a07575ee6a828667
+Source1:	http://downloads.sourceforge.net/crayzedsgui/cegui-docs-%{version}.tar.bz2
+# Source1-md5:	1096bf8c84bf6a22e8892ab9258c22f6
 Patch0:		pthread.patch
-Patch1:		python-sitedir.patch
 Patch2:		%{name}-glfw3.patch
 URL:		http://www.cegui.org.uk/
 BuildRequires:	DevIL-devel
@@ -424,7 +423,6 @@ Wiązania Pythona do biblioteki CEGUI OpenGLRenderer.
 %prep
 %setup -q -a 1 -n cegui-%{version}
 %patch0 -p1
-%patch1 -p1
 %patch2 -p1
 
 %build

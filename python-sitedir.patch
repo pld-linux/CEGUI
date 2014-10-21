@@ -1,9 +1,0 @@
---- cegui-0.8.2/cegui/src/ScriptModules/Python/bindings/CMakeLists.txt~	2013-06-12 10:06:54.000000000 +0200
-+++ cegui-0.8.2/cegui/src/ScriptModules/Python/bindings/CMakeLists.txt	2013-07-14 17:45:37.382395228 +0200
-@@ -1,5 +1,5 @@
- execute_process(
--    COMMAND ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_lib(prefix=\"\")"
-+    COMMAND ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_lib(plat_specific=1, prefix=\"\")"
-     OUTPUT_VARIABLE CEGUI_PYTHON_INSTALL_DIR
-     OUTPUT_STRIP_TRAILING_WHITESPACE
- )
