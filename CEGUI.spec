@@ -3,6 +3,7 @@
 %bcond_without	xercesc		# build XercesParser
 %bcond_without	ogre		# build without Ogre renderer
 %bcond_without	opengl		# build without OpenGL renderer
+%bcond_with	directb		# unsupported by upstream
 %bcond_with	samples		# build samples
 #
 Summary:	CEGUI - a free library providing windowing and widgets
@@ -17,10 +18,10 @@ Source0:	http://downloads.sourceforge.net/crayzedsgui/cegui-%{version}.tar.bz2
 Source1:	http://downloads.sourceforge.net/crayzedsgui/cegui-docs-%{version}.tar.bz2
 # Source1-md5:	1096bf8c84bf6a22e8892ab9258c22f6
 Patch0:		pthread.patch
-Patch2:		%{name}-glfw3.patch
+Patch1:		%{name}-glfw3.patch
 URL:		http://www.cegui.org.uk/
 BuildRequires:	DevIL-devel
-BuildRequires:	DirectFB-devel >= 1.2.0
+%{?with_directfb:BuildRequires:	DirectFB-devel >= 1.2.0}
 BuildRequires:	FreeImage-devel
 BuildRequires:	SILLY-devel >= 0.1.0
 BuildRequires:	boost-devel >= 1.36.0
@@ -423,13 +424,14 @@ Wiązania Pythona do biblioteki CEGUI OpenGLRenderer.
 %prep
 %setup -q -a 1 -n cegui-%{version}
 %patch0 -p1
-%patch2 -p1
+%patch1 -p1
 
 %build
 install -d build
 cd build
 %cmake .. \
 	-DCEGUI_SAMPLES_ENABLED:BOOL=%{?with_samples:ON}%{!?with_samples:OFF} \
+	-DCEGUI_BUILD_RENDERER_DIRECTFB:BOOL=%{?with_directfb:ON}%{!?with_directfb:OFF} \
 	-DCEGUI_BUILD_RENDERER_OPENGL:BOOL=%{?with_opengl:ON}%{!?with_opengl:OFF} \
 	-DCEGUI_BUILD_RENDERER_OGRE:BOOL=%{?with_ogre:ON}%{!?with_ogre:OFF} \
 	-DCEGUI_BUILD_XMLPARSER_XERCES:BOOL=%{?with_xercesc:ON}%{!?with_xercesc:OFF} \
@@ -464,24 +466,20 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc doc/README
+%doc doc/README.orig
 %attr(755,root,root) %{_libdir}/libCEGUIBase-0.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libCEGUIBase-0.so.2
 %attr(755,root,root) %{_libdir}/libCEGUICommonDialogs-0.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libCEGUICommonDialogs-0.so.2
-%attr(755,root,root) %{_libdir}/libCEGUINullRenderer-0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCEGUINullRenderer-0.so.2
 %attr(755,root,root) %{_libdir}/libCEGUILuaScriptModule-0.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libCEGUILuaScriptModule-0.so.2
 # plugins
 %dir %{_libdir}/cegui-0.8
 %attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUICoreWindowRendererSet.so
-%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUISTBImageCodec.so
-%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUITGAImageCodec.so
 
 %files docs
 %defattr(644,root,root,755)
-%doc cegui-docs-0.8.3/*
+%doc cegui-docs-%{version}/*
 
 %files devel
 %defattr(644,root,root,755)
@@ -489,16 +487,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libCEGUIBase-0.so
 %attr(755,root,root) %{_libdir}/libCEGUICommonDialogs-0.so
 %attr(755,root,root) %{_libdir}/libCEGUILuaScriptModule-0.so
-%attr(755,root,root) %{_libdir}/libCEGUINullRenderer-0.so
 %dir %{_includedir}/cegui-0
 %dir %{_includedir}/cegui-0/%{name}
 %{_includedir}/cegui-0/%{name}/*.h
 %{_includedir}/cegui-0/%{name}/CommonDialogs
 %dir %{_includedir}/cegui-0/%{name}/ImageCodecModules
-%{_includedir}/cegui-0/%{name}/ImageCodecModules/STB
-%{_includedir}/cegui-0/%{name}/ImageCodecModules/TGA
 %dir %{_includedir}/cegui-0/%{name}/RendererModules
-%{_includedir}/cegui-0/%{name}/RendererModules/Null
 %{_includedir}/cegui-0/%{name}/ScriptModules
 %{_includedir}/cegui-0/%{name}/WindowRendererSets
 %{_includedir}/cegui-0/%{name}/XMLParserModules
@@ -506,7 +500,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/cegui-0/%{name}/widgets
 %{_pkgconfigdir}/CEGUI-0.pc
 %{_pkgconfigdir}/CEGUI-0-LUA.pc
-%{_pkgconfigdir}/CEGUI-0-NULL.pc
 
 %files ImageCodec-Corona
 %defattr(644,root,root,755)
@@ -560,6 +553,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUIXercesParser.so
 
+%if %{with directfb}
 %files Renderer-DirectFB
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libCEGUIDirectFBRenderer-0.so.*.*.*
@@ -569,6 +563,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libCEGUIDirectFBRenderer-0.so
 %{_includedir}/cegui-0/%{name}/RendererModules/DirectFB
+%endif
 
 %files Renderer-Irrlicht
 %defattr(644,root,root,755)
@@ -612,7 +607,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %dir %{py_sitedir}/cegui-0.8
 %attr(755,root,root) %{py_sitedir}/cegui-0.8/PyCEGUI.so
-%attr(755,root,root) %{py_sitedir}/cegui-0.8/PyCEGUINullRenderer.so
 
 %if %{with ogre}
 %files -n python-CEGUI-Renderer-Ogre
