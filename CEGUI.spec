@@ -19,10 +19,13 @@ Source1:	http://downloads.sourceforge.net/crayzedsgui/cegui-docs-%{version}.tar.
 # Source1-md5:	1096bf8c84bf6a22e8892ab9258c22f6
 Patch0:		pthread.patch
 Patch1:		%{name}-glfw3.patch
+Patch2:		%{name}-python.patch
 URL:		http://www.cegui.org.uk/
 BuildRequires:	DevIL-devel
 %{?with_directfb:BuildRequires:	DirectFB-devel >= 1.2.0}
 BuildRequires:	FreeImage-devel
+BuildRequires:	GLM
+BuildRequires:	OpenGL-devel
 BuildRequires:	SILLY-devel >= 0.1.0
 BuildRequires:	boost-devel >= 1.36.0
 BuildRequires:	boost-python-devel >= 1.36.0
@@ -32,6 +35,8 @@ BuildRequires:	doxygen
 BuildRequires:	expat-devel
 BuildRequires:	fribidi-devel
 BuildRequires:	freetype-devel >= 2.0
+BuildRequires:	glew-devel
+# for SampleFramework
 BuildRequires:	glfw-devel
 BuildRequires:	gtk+2-devel >= 2:2.4
 BuildRequires:	irrlicht-devel >= 1.4
@@ -46,7 +51,7 @@ BuildRequires:	ois-devel >= 1.0.0
 %endif
 BuildRequires:	pcre-devel >= 5.0
 BuildRequires:	pkgconfig
-BuildRequires:	python-devel
+BuildRequires:	python-devel >= 2
 BuildRequires:	rapidxml
 BuildRequires:	sed >= 4.0
 BuildRequires:	tinyxml-devel
@@ -425,6 +430,7 @@ Wiązania Pythona do biblioteki CEGUI OpenGLRenderer.
 %setup -q -a 1 -n cegui-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 install -d build
