@@ -1,0 +1,13 @@
+--- cegui-0.8.4/CMakeLists.txt~	2015-06-22 20:36:23.000000000 +0000
++++ cegui-0.8.4/CMakeLists.txt	2015-06-22 21:21:28.758070773 +0000
+@@ -447,8 +447,8 @@
+ # set up install sub-directories
+ if (CMAKE_SIZEOF_VOID_P EQUAL 8 AND EXISTS "${CMAKE_INSTALL_PREFIX}/lib64")
+     set( CEGUI_LIB_INSTALL_DIR lib64 )
+-elseif (CMAKE_SIZEOF_VOID_P EQUAL 4 AND EXISTS "${CMAKE_INSTALL_PREFIX}/lib32")
+-    set( CEGUI_LIB_INSTALL_DIR lib32 )
++elseif (CMAKE_SIZEOF_VOID_P EQUAL 4 AND EXISTS "${CMAKE_INSTALL_PREFIX}/libx32")
++    set( CEGUI_LIB_INSTALL_DIR libx32 )
+ else()
+     set( CEGUI_LIB_INSTALL_DIR lib )
+ endif()

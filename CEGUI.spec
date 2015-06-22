@@ -20,6 +20,7 @@ Source1:	http://downloads.sourceforge.net/crayzedsgui/cegui-docs-%{version}.tar.
 Patch0:		pthread.patch
 Patch1:		%{name}-glfw3.patch
 Patch2:		%{name}-python.patch
+Patch3:		x32.patch
 URL:		http://www.cegui.org.uk/
 BuildRequires:	DevIL-devel
 %{?with_directfb:BuildRequires:	DirectFB-devel >= 1.2.0}
@@ -431,6 +432,7 @@ Wiązania Pythona do biblioteki CEGUI OpenGLRenderer.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 install -d build
