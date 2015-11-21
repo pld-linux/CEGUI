@@ -21,6 +21,7 @@ Patch0:		pthread.patch
 Patch1:		%{name}-glfw3.patch
 Patch2:		%{name}-python.patch
 Patch3:		x32.patch
+Patch4:		boost-1.59.patch
 URL:		http://www.cegui.org.uk/
 BuildRequires:	DevIL-devel
 %{?with_directfb:BuildRequires:	DirectFB-devel >= 1.2.0}
@@ -433,6 +434,7 @@ Wiązania Pythona do biblioteki CEGUI OpenGLRenderer.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 install -d build
