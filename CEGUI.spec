@@ -9,25 +9,24 @@
 Summary:	CEGUI - a free library providing windowing and widgets
 Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
 Name:		CEGUI
-Version:	0.8.4
-Release:	9
+Version:	0.8.7
+Release:	1
 License:	LGPL v2.1+ (with MIT parts)
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/crayzedsgui/cegui-%{version}.tar.bz2
-# Source0-md5:	344917301b5ed867a07575ee6a828667
-Source1:	http://downloads.sourceforge.net/crayzedsgui/cegui-docs-%{version}.tar.bz2
-# Source1-md5:	1096bf8c84bf6a22e8892ab9258c22f6
+# Source0-md5:	cebcc95e205b9ad353db0d65b9b2d505
+Source1:	http://downloads.sourceforge.net/crayzedsgui/cegui-docs.%{version}.zip
+# Source1-md5:	5f3b19f82cf1e11b4406560b8e809f20
 Patch0:		pthread.patch
 Patch1:		%{name}-glfw3.patch
-Patch2:		%{name}-python.patch
 Patch3:		x32.patch
-Patch4:		boost-1.59.patch
 URL:		http://www.cegui.org.uk/
 BuildRequires:	DevIL-devel
 %{?with_directfb:BuildRequires:	DirectFB-devel >= 1.2.0}
 BuildRequires:	FreeImage-devel
 BuildRequires:	GLM
 BuildRequires:	OpenGL-devel
+BuildRequires:	SDL2-devel
 BuildRequires:	SILLY-devel >= 0.1.0
 BuildRequires:	boost-devel >= 1.36.0
 BuildRequires:	boost-python-devel >= 1.36.0
@@ -189,6 +188,33 @@ Header files for CEGUI FreeImageImageCodec library.
 
 %description ImageCodec-FreeImage-devel -l pl.UTF-8
 Pliki nagłówkowe biblioteki CEGUI FreeImageImageCodec.
+
+%package ImageCodec-SDL2
+Summary:	SDL2ImageCodec library for CEGUI
+Summary(pl.UTF-8):	Biblioteka SDL2ImageCodec dla CEGUI
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	SDL2
+
+%description ImageCodec-SDL2
+SDL2ImageCodec library for CEGUI.
+
+%description ImageCodec-SDL2 -l pl.UTF-8
+Biblioteka SDL2ImageCodec dla CEGUI
+
+%package ImageCodec-SDL2-devel
+Summary:	Header files for CEGUI SDL2ImageCodec library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki CEGUI SDL2ImageCodec
+Group:		Development/Libraries
+Requires:	%{name}-ImageCodec-SDL2 = %{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	SDL2-devel >= 0.1.0
+
+%description ImageCodec-SDL2-devel
+Header files for CEGUI SDL2ImageCodec library.
+
+%description ImageCodec-SDL2-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki CEGUI SDL2ImageCodec.
 
 %package ImageCodec-SILLY
 Summary:	SILLYImageCodec library for CEGUI
@@ -432,9 +458,7 @@ Wiązania Pythona do biblioteki CEGUI OpenGLRenderer.
 %setup -q -a 1 -n cegui-%{version}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 %build
 install -d build
@@ -476,7 +500,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc doc/README.orig
+%doc README.md
 %attr(755,root,root) %{_libdir}/libCEGUIBase-0.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libCEGUIBase-0.so.2
 %attr(755,root,root) %{_libdir}/libCEGUICommonDialogs-0.so.*.*.*
@@ -534,6 +558,14 @@ rm -rf $RPM_BUILD_ROOT
 %files ImageCodec-FreeImage-devel
 %defattr(644,root,root,755)
 %{_includedir}/cegui-0/%{name}/ImageCodecModules/FreeImage
+
+%files ImageCodec-SDL2
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/cegui-0.8/libCEGUISDL2ImageCodec.so
+
+%files ImageCodec-SDL2-devel
+%defattr(644,root,root,755)
+%{_includedir}/cegui-0/%{name}/ImageCodecModules/SDL2
 
 %files ImageCodec-SILLY
 %defattr(644,root,root,755)
