@@ -27,6 +27,7 @@ BuildRequires:	FreeImage-devel
 BuildRequires:	GLM
 BuildRequires:	OpenGL-devel
 BuildRequires:	SDL2-devel
+BuildRequires:	SDL2_image-devel
 BuildRequires:	SILLY-devel >= 0.1.0
 BuildRequires:	boost-devel >= 1.36.0
 BuildRequires:	boost-python-devel >= 1.36.0
