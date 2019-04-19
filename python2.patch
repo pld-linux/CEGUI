@@ -1,0 +1,20 @@
+--- cegui-0.8.7/CMakeLists.txt~	2019-04-18 08:25:25.000000000 +0200
++++ cegui-0.8.7/CMakeLists.txt	2019-04-19 09:41:27.720505266 +0200
+@@ -126,7 +126,7 @@
+ else()
+   find_package(PythonLibs)
+ endif()
+-find_package(Boost 1.36.0 COMPONENTS python unit_test_framework system timer)
++find_package(Boost 1.36.0 COMPONENTS python27 unit_test_framework system timer)
+ 
+ find_package(Doxygen)
+ find_package(GTK2 COMPONENTS gtk)
+@@ -213,7 +213,7 @@
+ cegui_dependent_option( CEGUI_BUILD_LUA_MODULE "Specifies whether to build the Lua based script module" "LUA51_FOUND;TOLUAPP_FOUND" )
+ cegui_dependent_option( CEGUI_BUILD_LUA_GENERATOR "Specifies whether to build the custom tolua binding generator 'toluappcegui'" "LUA51_FOUND;TOLUAPP_FOUND" )
+ 
+-cegui_dependent_option( CEGUI_BUILD_PYTHON_MODULES "Specifies whether to build the Python extension module(s)" "PYTHONINTERP_FOUND;PYTHONLIBS_FOUND;Boost_PYTHON_FOUND" )
++cegui_dependent_option( CEGUI_BUILD_PYTHON_MODULES "Specifies whether to build the Python extension module(s)" "PYTHONINTERP_FOUND;PYTHONLIBS_FOUND;Boost_PYTHON27_FOUND" )
+ 
+ option( CEGUI_OPTION_SAFE_LUA_MODULE "Specifies whether to enable extra validation in the Lua script module in non-debug builds" FALSE )
+ 
