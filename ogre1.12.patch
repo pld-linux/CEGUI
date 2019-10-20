@@ -1,0 +1,22 @@
+--- cegui-0.8.7/cmake/FindOgre.cmake~	2019-10-20 11:06:37.000000000 +0200
++++ cegui-0.8.7/cmake/FindOgre.cmake	2019-10-20 11:15:03.776472437 +0200
+@@ -249,7 +249,7 @@
+         endif ()
+     endif()
+ 
+-    file (STRINGS "${OGRE_H_PATH}/OgrePrerequisites.h" _CEGUIOGREVERSIONDEFINES REGEX ".*#define OGRE_VERSION_.*[0-9]+")
++    file (STRINGS "${OGRE_H_PATH}/OgreBuildSettings.h" _CEGUIOGREVERSIONDEFINES REGEX ".*#define OGRE_VERSION_.*[0-9]+")
+ 
+     foreach (ver MAJOR MINOR PATCH)
+         set (CEGUI_FOUND_OGRE_VERSION_${ver} 0)
+--- cegui-0.8.7/cegui/src/RendererModules/Ogre/Texture.cpp.orig	2016-04-23 20:19:40.000000000 +0200
++++ cegui-0.8.7/cegui/src/RendererModules/Ogre/Texture.cpp	2019-10-20 11:23:14.259789302 +0200
+@@ -243,7 +243,7 @@
+     // address the issue as close to the source of the problem as possible.
+     Ogre::PixelBox pb(area.getWidth(), area.getHeight(),
+                       1, Ogre::PF_A8R8G8B8, const_cast<void*>(sourceData));
+-    Ogre::Image::Box box(area.left(), area.top(), area.right(), area.bottom());
++    Ogre::Box box(area.left(), area.top(), area.right(), area.bottom());
+     d_texture->getBuffer()->blitFromMemory(pb, box);
+ }
+ 
