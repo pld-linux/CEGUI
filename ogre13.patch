@@ -1,0 +1,33 @@
+--- cegui-0.8.7/cegui/include/CEGUI/RendererModules/Ogre/Renderer.h.orig	2016-04-23 20:19:40.000000000 +0200
++++ cegui-0.8.7/cegui/include/CEGUI/RendererModules/Ogre/Renderer.h	2022-03-11 21:36:04.637974284 +0100
+@@ -64,13 +64,13 @@
+ class Matrix4;
+ }
+ 
+-#if (CEGUI_OGRE_VERSION >= (2 << 16))
++#if (CEGUI_OGRE_VERSION >= (20 << 16))
+ // The new Ogre Compositor2 system has to be used since ViewPorts 
+ // no longer have the required functionality
+ #define CEGUI_USE_OGRE_COMPOSITOR2
+ #endif
+ 
+-#if (CEGUI_OGRE_VERSION >= ((2 << 16) | (1 << 8) | 0))
++#if (CEGUI_OGRE_VERSION >= ((20 << 16) | (1 << 8) | 0))
+ // The HLMS has to be used since fixed pipeline is disabled
+ #define CEGUI_USE_OGRE_HLMS
+ #include <OgreRenderOperation.h>
+--- cegui-0.8.7/cegui/src/RendererModules/Ogre/Texture.cpp.orig	2022-03-12 09:40:45.000000000 +0100
++++ cegui-0.8.7/cegui/src/RendererModules/Ogre/Texture.cpp	2022-03-12 09:43:34.620043093 +0100
+@@ -24,10 +24,12 @@
+  *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+  *   OTHER DEALINGS IN THE SOFTWARE.
+  ***************************************************************************/
++#include <sstream>
+ #include "CEGUI/RendererModules/Ogre/Texture.h"
+ #include "CEGUI/Exceptions.h"
+ #include "CEGUI/System.h"
+ #include "CEGUI/RendererModules/Ogre/ImageCodec.h"
++#include <OgrePrerequisites.h>
+ #include <OgreTextureManager.h>
+ #include <OgreHardwarePixelBuffer.h>
+ 
