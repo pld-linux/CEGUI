@@ -1,7 +1,7 @@
 #
 # Conditional build:
 %bcond_without	xercesc		# build XercesParser
-%bcond_without	ogre		# build without Ogre renderer
+%bcond_with	ogre		# build without Ogre renderer
 %bcond_without	opengl		# build without OpenGL renderer
 %bcond_with	directb		# unsupported by upstream
 %bcond_with	samples		# build samples
