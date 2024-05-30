@@ -28,8 +28,11 @@ URL:		http://www.cegui.org.uk/
 BuildRequires:	DevIL-devel
 %{?with_directfb:BuildRequires:	DirectFB-devel >= 1.2.0}
 BuildRequires:	FreeImage-devel
-BuildRequires:	GLM
+BuildRequires:	GLM-devel
 BuildRequires:	OpenGL-devel
+%if %{with opengl}
+BuildRequires:	OpenGL-GLU-devel
+%endif
 BuildRequires:	SDL2-devel
 BuildRequires:	SDL2_image-devel
 BuildRequires:	SILLY-devel >= 0.1.0
@@ -65,12 +68,6 @@ BuildRequires:	tolua++-devel
 %{?with_xercesc:BuildRequires:	xerces-c-devel}
 # for irrlicht renderer
 BuildRequires:	xorg-lib-libXxf86vm-devel
-%if %{with opengl}
-BuildRequires:	GLM
-BuildRequires:	OpenGL-GLU-devel
-BuildRequires:	glew-devel
-BuildRequires:	glfw-devel
-%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
