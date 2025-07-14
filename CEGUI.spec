@@ -458,13 +458,13 @@ Wiązania Pythona do biblioteki CEGUI OpenGLRenderer.
 
 %prep
 %setup -q -a 1 -n cegui-%{version}
-%patch0 -p1
-%patch1 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P3 -p1
+%patch -P4 -p1
+%patch -P5 -p1
+%patch -P6 -p1
+%patch -P7 -p1
 
 %build
 install -d build
