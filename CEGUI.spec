@@ -10,7 +10,7 @@ Summary:	CEGUI - a free library providing windowing and widgets
 Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
 Name:		CEGUI
 Version:	0.8.7
-Release:	11
+Release:	12
 License:	LGPL v2.1+ (with MIT parts)
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/crayzedsgui/cegui-%{version}.tar.bz2
@@ -470,7 +470,7 @@ Wiązania Pythona do biblioteki CEGUI OpenGLRenderer.
 install -d build
 cd build
 %cmake .. \
-	-DPYTHON_EXECUTABLE=%{_python} \
+	-DPYTHON_EXECUTABLE=%{__python} \
 	-DBoost_INCLUDE_DIR=%{_includedir}/boost \
 	-DCEGUI_SAMPLES_ENABLED:BOOL=%{?with_samples:ON}%{!?with_samples:OFF} \
 	-DCEGUI_BUILD_RENDERER_DIRECTFB:BOOL=%{?with_directfb:ON}%{!?with_directfb:OFF} \
