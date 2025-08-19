@@ -5,6 +5,7 @@
 %bcond_without	opengl		# build without OpenGL renderer
 %bcond_with	directb		# unsupported by upstream
 %bcond_with	samples		# build samples
+%bcond_with	python		# build Python2 modules
 #
 Summary:	CEGUI - a free library providing windowing and widgets
 Summary(pl.UTF-8):	CEGUI - wolnodostępna biblioteka zapewniającą okienka i widgety
@@ -37,7 +38,7 @@ BuildRequires:	SDL2-devel
 BuildRequires:	SDL2_image-devel
 BuildRequires:	SILLY-devel >= 0.1.0
 BuildRequires:	boost-devel >= 1.36.0
-BuildRequires:	boost-python-devel >= 1.36.0
+%{?with_python:BuildRequires:	boost-python-devel >= 1.36.0}
 BuildRequires:	cmake >= 2.8
 BuildRequires:	corona-devel
 BuildRequires:	doxygen
@@ -60,7 +61,7 @@ BuildRequires:	ois-devel >= 1.0.0
 %endif
 BuildRequires:	pcre-devel >= 5.0
 BuildRequires:	pkgconfig
-BuildRequires:	python-devel >= 2
+%{?with_python:BuildRequires:	python-devel >= 2}
 BuildRequires:	rapidxml
 BuildRequires:	sed >= 4.0
 BuildRequires:	tinyxml-devel
@@ -472,7 +473,11 @@ Wiązania Pythona do biblioteki CEGUI OpenGLRenderer.
 install -d build
 cd build
 %cmake .. \
+%if %{with python}
 	-DPYTHON_EXECUTABLE=%{__python} \
+%else
+	-DCEGUI_BUILD_PYTHON_MODULES=OFF \
+%endif
 	-DBoost_INCLUDE_DIR=%{_includedir}/boost \
 	-DCEGUI_SAMPLES_ENABLED:BOOL=%{?with_samples:ON}%{!?with_samples:OFF} \
 	-DCEGUI_BUILD_RENDERER_DIRECTFB:BOOL=%{?with_directfb:ON}%{!?with_directfb:OFF} \
@@ -483,7 +488,7 @@ cd build
 	-DCEGUI_OPTION_DEFAULT_XMLPARSER:STRING=LibxmlParser \
 	-DCEGUI_PYTHON_INSTALL_DIR=%{py_sitedir}
 
-%{__make} -j1
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -655,6 +660,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/CEGUI-0-OPENGL3.pc
 %endif
 
+%if %{with python}
 %files -n python-CEGUI
 %defattr(644,root,root,755)
 %dir %{py_sitedir}/cegui-0.8
@@ -670,4 +676,5 @@ rm -rf $RPM_BUILD_ROOT
 %files -n python-CEGUI-Renderer-OpenGL
 %defattr(644,root,root,755)
 %attr(755,root,root) %{py_sitedir}/cegui-0.8/PyCEGUIOpenGLRenderer.so
+%endif
 %endif
